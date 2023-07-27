@@ -16,6 +16,13 @@
     <link rel="stylesheet" href="assets/css/lforms.min.css">
     <link rel="stylesheet" href="assets/css/codemirror.css">
     <link rel="stylesheet" href="assets/css/mycodemirror.css">
+    <style>
+        #json-rendererQR {
+          width: 100%;
+          height: 400px; /* adjust as needed */
+        }
+      </style>
+
 </head>
 
 <body style="padding-left: 77px;margin-top: 57px;">
@@ -104,7 +111,7 @@
                 <div class="text-start" style="width: 100%;"></div>
             </div>
             <div><textarea id="mappingCode"></textarea>
-                <div class="btn-group" role="group" style="display:block; width: auto;"><button class="btn btn-success btn-sm" type="button" onclick="extractQR()">Extract</button><button class="btn btn-warning btn-sm" type="submit" onclick="updateMappingAndExtractQR()" style="margin-left: calc(100% - 177px);">Update &amp; Extract</button></div>
+                <div class="btn-group" role="group" style="display:block; width: auto;"><button class="btn btn-success btn-sm" type="button" onclick="extractCurrentQR()">Extract</button><button class="btn btn-warning btn-sm" type="submit" onclick="updateMappingAndExtractQR()" style="margin-left: calc(100% - 177px);">Update &amp; Extract</button></div>
             </div>
         </div>
     </div>
@@ -129,7 +136,7 @@
                     </div>
                 </div>
                 <div class="row" style="margin: 15px;">
-                    <div class="column" style="width: calc(50% - 20px);"><code id="json-rendererQR">Text</code></div>
+                    <div class="column" style="width: calc(50% - 20px);"><textarea id="json-rendererQR"></textarea></div>
                     <div class="column" style="width: 35px;"><p><br />&rarr;</p></div>
                     <div class="column" style="width: calc(50% - 20px);"><code id="json-renderer">Text</code></div>
                 </div>
@@ -151,8 +158,21 @@
               direction: "ltr"
           });
     </script>
- 
-    <script>
+
+
+<script>
+
+var editorQR;
+document.addEventListener("DOMContentLoaded", function() {
+        editorQR = CodeMirror.fromTextArea(document.getElementById("json-rendererQR"), {
+            lineNumbers: true,
+            mode: "application/json",
+            theme: "default"
+        });
+    });
+
+
+
         const serverBase="http://localhost:8080/fhir";
         function reloadQuestionnaire() {
             var x = document.getElementById("questionnaires");
@@ -193,9 +213,7 @@
                 },
             });
         }
-    </script>
-
-        <script type="text/javascript">
+ 
 ////// GET all Questionnaires from server
         $(document).ready(function() 
           { 
@@ -215,24 +233,20 @@
                         }
                 });
             });
-        </script>
 
-        <script>
             function showQR() {
-              var qr = LForms.Util.getFormFHIRData('QuestionnaireResponse', 'R4');
-              console.log(qr);
-              qr.questionnaire=fhirQ.url;
-              try {
-                var input = eval('(' + JSON.stringify(qr) + ')');
-                $('#json-rendererQR').jsonViewer(input);
-              }
-              catch (error) {
-                alert("Cannot eval JSON: " + error);
-              };
+                var qr = LForms.Util.getFormFHIRData('QuestionnaireResponse', 'R4');
+                console.log(qr);
+                qr.questionnaire=fhirQ.url;
+                try {
+                    var input = JSON.stringify(qr, null, 2); // This will format your JSON with 2 spaces indentation
+                    editorQR.setValue(input); // Assuming your CodeMirror instance is called editorQR
+                }
+                catch (error) {
+                    alert("Cannot stringify JSON: " + error);
+                };
             }
-        </script>
 
-        <script>
             function extractQR(){
               var qr = LForms.Util.getFormFHIRData('QuestionnaireResponse', 'R4');
               console.log(qr);
@@ -264,11 +278,41 @@
                         }
               });
             }
-        </script>
+
+            function extractCurrentQR(){
+                var qrString = editorQR.getValue();
+
+                // Try to parse the content of the editor to a JavaScript object
+                try {
+                    var qr = JSON.parse(qrString);
+                } catch (error) {
+                    alert("Cannot parse JSON: " + error);
+                    return;  // stop the execution of the function
+                }
+
+                $.ajaxSetup({
+                headers: {
+                  'Content-Type': 'application/fhir+json;fhirVersion=4.0',
+                  'Accept': 'application/fhir+json;fhirVersion=4.0'
+                }
+              });
+
+              $.post(serverBase+"/QuestionnaireResponse/$extract",
+                JSON.stringify(qr),
+                function(data, status){
+                    console.log(data);
+                    try {
+                        var input = eval('(' + JSON.stringify(data) + ')');
+                            $('#json-renderer').jsonViewer(input);
+                    }
+                    catch (error) {
+                            alert("Cannot eval JSON: " + error);
+                        }
+              });
+            }
 
 
-
-        <script>
+        
             function updateMappingAndExtractQR(){
               var qr = LForms.Util.getFormFHIRData('QuestionnaireResponse', 'R4');
               console.log(qr);
