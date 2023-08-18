@@ -1,0 +1,135 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "SOTMeasles",
+  "url": "http://ritikarawlani.github.io/smart-outbreak-measles/StructureDefinition/SOTMeasles",
+  "version": "0.1",
+  "name": "SOTMeasles",
+  "title": "Surveillance & Outbreak Toolkit Measles",
+  "status": "draft",
+  "fhirVersion": "4.0.1",
+  "mapping": [
+    {
+      "identity": "rim",
+      "uri": "http://hl7.org/v3",
+      "name": "RIM Mapping"
+    }
+  ],
+  "kind": "logical",
+  "abstract": true,
+  "type": "http://ritikarawlani.github.io/smart-outbreak-measles/StructureDefinition/SOTMeasles",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Element",
+  "derivation": "specialization",
+  "differential": {
+    "element": [
+      {
+        "id": "SOTMeasles",
+        "path": "SOTMeasles",
+        "short": "Surveillance & Outbreak Toolkit Measles"
+      },
+      {
+        "id": "SOTMeasles.Demographics",
+        "path": "SOTMeasles.Demographics",
+        "short": "Demographics",
+        "definition": "Demographics",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "http://ritikarawlani.github.io/smart-outbreak-measles/StructureDefinition/SOTMeaslesDemographic"
+          }
+        ]
+      },
+      {
+        "id": "SOTMeasles.ReportingSource",
+        "path": "SOTMeasles.ReportingSource",
+        "short": "Reporting Souce",
+        "definition": "Reporting Source",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "http://ritikarawlani.github.io/smart-outbreak-measles/StructureDefinition/SOTMeaslesReportingSource"
+          }
+        ]
+      },
+      {
+        "id": "SOTMeasles.Clinical",
+        "path": "SOTMeasles.Clinical",
+        "short": "Clinical",
+        "definition": "Clinical",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "http://ritikarawlani.github.io/smart-outbreak-measles/StructureDefinition/SOTMeaslesClinical"
+          }
+        ]
+      },
+      {
+        "id": "SOTMeasles.LaboratoryResults",
+        "path": "SOTMeasles.LaboratoryResults",
+        "short": "Laboratory Results",
+        "definition": "Laboratory Results",
+        "min": 1,
+        "max": "*",
+        "type": [
+          {
+            "code": "http://ritikarawlani.github.io/smart-outbreak-measles/StructureDefinition/SOTMeaslesLaboratoryResults"
+          }
+        ]
+      },
+      {
+        "id": "SOTMeasles.VaccinationStatus",
+        "path": "SOTMeasles.VaccinationStatus",
+        "short": "Vaccination Status",
+        "definition": "Vaccination Status",
+        "min": 1,
+        "max": "*",
+        "type": [
+          {
+            "code": "http://ritikarawlani.github.io/smart-outbreak-measles/StructureDefinition/SOTMeaslesVaccinationStatus"
+          }
+        ]
+      },
+      {
+        "id": "SOTMeasles.ContactTracing",
+        "path": "SOTMeasles.ContactTracing",
+        "short": "Contact Tracing",
+        "definition": "Contact Tracing",
+        "min": 1,
+        "max": "*",
+        "type": [
+          {
+            "code": "http://ritikarawlani.github.io/smart-outbreak-measles/StructureDefinition/SOTMeaslesContactTracing"
+          }
+        ]
+      },
+      {
+        "id": "SOTMeasles.EpiData",
+        "path": "SOTMeasles.EpiData",
+        "short": "Epidemiological Data",
+        "definition": "Epidemiological Data",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "http://ritikarawlani.github.io/smart-outbreak-measles/StructureDefinition/SOTMeaslesEpiData"
+          }
+        ]
+      },
+      {
+        "id": "SOTMeasles.Classification",
+        "path": "SOTMeasles.Classification",
+        "short": "Classification",
+        "definition": "Classification",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "http://ritikarawlani.github.io/smart-outbreak-measles/StructureDefinition/SOTMeaslesClassification"
+          }
+        ]
+      }
+    ]
+  }
+}

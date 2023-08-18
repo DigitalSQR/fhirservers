@@ -1,0 +1,234 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "SOTMeaslesDemographic",
+  "url": "http://ritikarawlani.github.io/smart-outbreak-measles/StructureDefinition/SOTMeaslesDemographic",
+  "version": "0.1",
+  "name": "SOTMeaslesDemographic",
+  "title": "Surveillance & Outbreak Toolkit Measles- Demographics",
+  "status": "draft",
+  "fhirVersion": "4.0.1",
+  "mapping": [
+    {
+      "identity": "rim",
+      "uri": "http://hl7.org/v3",
+      "name": "RIM Mapping"
+    }
+  ],
+  "kind": "logical",
+  "abstract": true,
+  "type": "http://ritikarawlani.github.io/smart-outbreak-measles/StructureDefinition/SOTMeaslesDemographic",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/BackboneElement",
+  "derivation": "specialization",
+  "differential": {
+    "element": [
+      {
+        "id": "SOTMeaslesDemographic",
+        "path": "SOTMeaslesDemographic",
+        "short": "Surveillance & Outbreak Toolkit Measles- Demographics"
+      },
+      {
+        "id": "SOTMeaslesDemographic.UniqueId",
+        "path": "SOTMeaslesDemographic.UniqueId",
+        "short": "Unique identification",
+        "definition": "Generated for new clients or a universal ID, if used in the country",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "id"
+          }
+        ]
+      },
+      {
+        "id": "SOTMeaslesDemographic.Name",
+        "path": "SOTMeaslesDemographic.Name",
+        "short": "Client's name",
+        "definition": "Client's full name",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "HumanName"
+          }
+        ]
+      },
+      {
+        "id": "SOTMeaslesDemographic.DateOfBirth",
+        "path": "SOTMeaslesDemographic.DateOfBirth",
+        "short": "Date of birth",
+        "definition": "The client's date of birth (DOB), if known",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "date"
+          }
+        ]
+      },
+      {
+        "id": "SOTMeaslesDemographic.Age",
+        "path": "SOTMeaslesDemographic.Age",
+        "short": "Age (number of years)",
+        "definition": "Age of the client if date of birth is not known",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Quantity"
+          }
+        ]
+      },
+      {
+        "id": "SOTMeaslesDemographic.Sex",
+        "path": "SOTMeaslesDemographic.Sex",
+        "short": "Sex at birth",
+        "definition": "Assigned sex at birth of the client",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "code"
+          }
+        ],
+        "binding": {
+          "strength": "required",
+          "valueSet": "http://ritikarawlani.github.io/smart-outbreak-measles/ValueSet/BiologicalSex"
+        }
+      },
+      {
+        "id": "SOTMeaslesDemographic.Ethnicity",
+        "path": "SOTMeaslesDemographic.Ethnicity",
+        "short": "Race/Ethnicity",
+        "definition": "Client's race and/or ethnicity, if appropriate in country setting",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "code"
+          }
+        ]
+      },
+      {
+        "id": "SOTMeaslesDemographic.PlaceOfResidence",
+        "path": "SOTMeaslesDemographic.PlaceOfResidence",
+        "short": "Client's address (city, district, and province)",
+        "definition": "Client's home address or address that the client is consenting to disclose",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "Address"
+          }
+        ]
+      },
+      {
+        "id": "SOTMeaslesDemographic.CountryofBirth",
+        "path": "SOTMeaslesDemographic.CountryofBirth",
+        "short": "Country of birth",
+        "definition": "Country of birth",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "string"
+          }
+        ]
+      },
+      {
+        "id": "SOTMeaslesDemographic.Landmark",
+        "path": "SOTMeaslesDemographic.Landmark",
+        "short": "Landmark",
+        "definition": "A landmark to locate the house",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "string"
+          }
+        ]
+      },
+      {
+        "id": "SOTMeaslesDemographic.LocalityType",
+        "path": "SOTMeaslesDemographic.LocalityType",
+        "short": "Type of locality",
+        "definition": "Type of Locality",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "code"
+          }
+        ],
+        "binding": {
+          "strength": "required",
+          "valueSet": "http://ritikarawlani.github.io/smart-outbreak-measles/ValueSet/LocType"
+        }
+      },
+      {
+        "id": "SOTMeaslesDemographic.Guardian",
+        "path": "SOTMeaslesDemographic.Guardian",
+        "short": "Name of mother/Guardian",
+        "definition": "Name of mother/Guardian",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "HumanName"
+          }
+        ]
+      },
+      {
+        "id": "SOTMeaslesDemographic.Telephone",
+        "path": "SOTMeaslesDemographic.Telephone",
+        "short": "Telephone",
+        "definition": "Telephone",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "ContactPoint"
+          }
+        ]
+      },
+      {
+        "id": "SOTMeaslesDemographic.Occupation",
+        "path": "SOTMeaslesDemographic.Occupation",
+        "short": "Occupation",
+        "definition": "Occupation",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "string"
+          }
+        ]
+      },
+      {
+        "id": "SOTMeaslesDemographic.WorkAddress",
+        "path": "SOTMeaslesDemographic.WorkAddress",
+        "short": "Work or school address",
+        "definition": "Work or school address",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Address"
+          }
+        ]
+      },
+      {
+        "id": "SOTMeaslesDemographic.PlaceOfInfection",
+        "path": "SOTMeaslesDemographic.PlaceOfInfection",
+        "short": "Place of infection",
+        "definition": "Place of infection",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "string"
+          }
+        ]
+      }
+    ]
+  }
+}
