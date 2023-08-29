@@ -10,8 +10,10 @@ services:
     ports:
       - ${server_port:-8080}:8080
     environment:
+       - server.servlet.context-path=
        - hapi.fhir.allow_multiple_delete=true
-#       - hapi.fhir.reuse_cached_search_results_millis=1000
+       - hapi.fhir.server_address=localhost:${server_port}
+       - hapi.fhir.reuse_cached_search_results_millis=1000
 
        - hapi.fhir.implementationguides.fhir_r4_core.name=hl7.fhir.r4.core
        - hapi.fhir.implementationguides.fhir_r4_core.version=4.0.1
@@ -26,21 +28,9 @@ services:
        - hapi.fhir.implementationguides.hl7_fhir_uv_sdc.version=3.0.0
        - hapi.fhir.implementationguides.hl7_fhir_uv_sdc.url=http://hl7.org/fhir/uv/sdc/package.tgz
 
-#      - spring.config.location=${ig_url}/application.yaml
-#      - hapi.fhir.fhir_version=${fhir_version}
-#      - hapi.fhir.implementationguides.${ig_code}.url=${ig_url}/package.tgz
-#      - hapi.fhir.implementationguides.${ig_code}.name=${ig_package_name}
-#      - hapi.fhir.implementationguides.${ig_code}.version=${ig_version}
-
-#  ember:
-#    image: jkiddo/ember:latest
-#    environment:
-#      - location=${ig_url}/package.tgz
-#      - serverBase=http://fhir-server:8080/fhir  # Leave this as is, this is ember stuff
-
   busybox:
     image: costateixeira/busybox:latest
     volumes:
       - ./app:/home/static
     ports:
-      - ${static_server_port:-8080}:3000
+      - ${static_server_port:-8087}:3000
