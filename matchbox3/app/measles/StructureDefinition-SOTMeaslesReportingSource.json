@@ -1,0 +1,212 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "SOTMeaslesReportingSource",
+  "url": "http://ritikarawlani.github.io/smart-outbreak-measles/StructureDefinition/SOTMeaslesReportingSource",
+  "version": "0.1",
+  "name": "SOTMeaslesReportingSource",
+  "title": "Surveillance & Outbreak Toolkit Measles- Reporting Source",
+  "status": "draft",
+  "fhirVersion": "4.0.1",
+  "mapping": [
+    {
+      "identity": "rim",
+      "uri": "http://hl7.org/v3",
+      "name": "RIM Mapping"
+    }
+  ],
+  "kind": "logical",
+  "abstract": true,
+  "type": "http://ritikarawlani.github.io/smart-outbreak-measles/StructureDefinition/SOTMeaslesReportingSource",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/BackboneElement",
+  "derivation": "specialization",
+  "differential": {
+    "element": [
+      {
+        "id": "SOTMeaslesReportingSource",
+        "path": "SOTMeaslesReportingSource",
+        "short": "Surveillance & Outbreak Toolkit Measles- Reporting Source"
+      },
+      {
+        "id": "SOTMeaslesReportingSource.PlaceOfReporting",
+        "path": "SOTMeaslesReportingSource.PlaceOfReporting",
+        "short": "Place of reporting",
+        "definition": "Place of reporting (for example, county or district)",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "Address"
+          }
+        ]
+      },
+      {
+        "id": "SOTMeaslesReportingSource.DateOfNotification",
+        "path": "SOTMeaslesReportingSource.DateOfNotification",
+        "short": "Date of notification",
+        "definition": "Date of notification",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "date"
+          }
+        ]
+      },
+      {
+        "id": "SOTMeaslesReportingSource.DateOfInvestigation",
+        "path": "SOTMeaslesReportingSource.DateOfInvestigation",
+        "short": "Date of investigation",
+        "definition": "Date of investigation",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "date"
+          }
+        ]
+      },
+      {
+        "id": "SOTMeaslesReportingSource.ReportedBy",
+        "path": "SOTMeaslesReportingSource.ReportedBy",
+        "short": "Reported by",
+        "definition": "Name of clinician who supects measles (or rubella)",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "string"
+          }
+        ]
+      },
+      {
+        "id": "SOTMeaslesReportingSource.HealthServiceName",
+        "path": "SOTMeaslesReportingSource.HealthServiceName",
+        "short": "Health service name",
+        "definition": "Health service name",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "string"
+          }
+        ]
+      },
+      {
+        "id": "SOTMeaslesReportingSource.HealthServiceTelephone",
+        "path": "SOTMeaslesReportingSource.HealthServiceTelephone",
+        "short": "Health service telephone",
+        "definition": "Health service telephone",
+        "min": 1,
+        "max": "*",
+        "type": [
+          {
+            "code": "ContactPoint"
+          }
+        ]
+      },
+      {
+        "id": "SOTMeaslesReportingSource.DateOfConsultation",
+        "path": "SOTMeaslesReportingSource.DateOfConsultation",
+        "short": "Date of consultation",
+        "definition": "Date of consultation",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "date"
+          }
+        ]
+      },
+      {
+        "id": "SOTMeaslesReportingSource.DateOfHomeVisit",
+        "path": "SOTMeaslesReportingSource.DateOfHomeVisit",
+        "short": "Date of home visit",
+        "definition": "Date of home visit",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "date"
+          }
+        ]
+      },
+      {
+        "id": "SOTMeaslesReportingSource.DateReportedLocal",
+        "path": "SOTMeaslesReportingSource.DateReportedLocal",
+        "short": "DateReported, Local",
+        "definition": "DateReported, Local",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "date"
+          }
+        ]
+      },
+      {
+        "id": "SOTMeaslesReportingSource.DateReportedNational",
+        "path": "SOTMeaslesReportingSource.DateReportedNational",
+        "short": "DateReported, National",
+        "definition": "DateReported, National",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "date"
+          }
+        ]
+      },
+      {
+        "id": "SOTMeaslesReportingSource.DetectedBy",
+        "path": "SOTMeaslesReportingSource.DetectedBy",
+        "short": "Detected By",
+        "definition": "Detected By",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "code"
+          }
+        ],
+        "binding": {
+          "strength": "required",
+          "valueSet": "http://ritikarawlani.github.io/smart-outbreak-measles/ValueSet/DetectedBy"
+        }
+      },
+      {
+        "id": "SOTMeaslesReportingSource.TypeOfProviderReporting",
+        "path": "SOTMeaslesReportingSource.TypeOfProviderReporting",
+        "short": "Type Of Provider Reporting",
+        "definition": "Type Of Provider Reporting",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "code"
+          }
+        ],
+        "binding": {
+          "strength": "required",
+          "valueSet": "http://ritikarawlani.github.io/smart-outbreak-measles/ValueSet/ProvType"
+        }
+      },
+      {
+        "id": "SOTMeaslesReportingSource.InitialDiagnosis",
+        "path": "SOTMeaslesReportingSource.InitialDiagnosis",
+        "short": "Initial Diagnosis",
+        "definition": "Initial Diagnosis",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "code"
+          }
+        ],
+        "binding": {
+          "strength": "required",
+          "valueSet": "http://ritikarawlani.github.io/smart-outbreak-measles/ValueSet/InitDiag"
+        }
+      }
+    ]
+  }
+}

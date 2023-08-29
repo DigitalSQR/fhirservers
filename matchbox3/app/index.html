@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Questionnaire StructureMap Debug v0.0.3</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap">
+    <link rel="stylesheet" href="assets/css/Glyphicons%20Halflings.css">
+    <link rel="stylesheet" href="assets/css/Collapse-card.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/zectStudio---Sidebar-Menu-by-bbbootstrap.css">
+    <link rel="stylesheet" href="assets/css/jquery.json-viewer.css">
+    <link rel="stylesheet" href="assets/css/lforms.min.css">
+    <link rel="stylesheet" href="assets/css/codemirror.css">
+    <link rel="stylesheet" href="assets/css/mycodemirror.css">
+    <style>
+        #json-rendererQR {
+          width: 100%;
+          height: 400px; /* adjust as needed */
+        }
+      </style>
+
+</head>
+
+<body style="padding-left: 77px;margin-top: 57px;">
+    <script src="lforms/lforms.min.js"> </script>
+    <script src="lforms/fhir/R4/lformsFHIR.min.js"> </script>
+    <script src="assets/js/codemirror.js"></script>
+
+    <div class="text-secondary" id="sidemenu">
+        <div class="text-secondary l-navbar" id="nav-bar" style="width: 47px;padding-top: 7px;padding-right: 7px;">
+            <nav class="text-secondary nav">
+                <div><a id="header_toggle-2" class="nav_logo header_toggle" href="#" style="margin-bottom: 57px;padding-left: 11px;" title="package"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-box nav_icon" style="height: 27px;width: 27px;color: rgb(247,246,251);">
+                            <path d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5 8 5.961 14.154 3.5 8.186 1.113zM15 4.239l-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923l6.5 2.6zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464L7.443.184z"></path>
+                        </svg><span class="nav_logo-name"></span></a>
+                    <div class="nav_list"><a class="nav_link active" href="#questionnaireslist" style="padding-left: 11px;" title="Questionnaires List"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-ui-checks-grid nav_icon" style="width: 27px;height: 27px;color: rgb(247, 246, 251);" title="Questionnaires List">
+                                <path d="M2 10h3a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1zm9-9h3a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-3a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zm0 9a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1h-3zm0-10a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h3a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2h-3zM2 9a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h3a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H2zm7 2a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-3a2 2 0 0 1-2-2v-3zM0 2a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm5.354.854a.5.5 0 1 0-.708-.708L3 3.793l-.646-.647a.5.5 0 1 0-.708.708l1 1a.5.5 0 0 0 .708 0l2-2z"></path>
+                            </svg><span class="nav_name">Questionnaires List</span></a></div>
+                    <div class="nav_list"><a class="nav_link active" href="#form" style="padding-left: 11px;" title="Form Filler"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-person-lines-fill nav_icon" style="width: 27px;height: 27px;">
+                                <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2z"></path>
+                            </svg><span class="nav_name">Form</span></a></div>
+                    <div class="nav_list"><a class="nav_link active" href="#mapping" style="padding-left: 11px;" title="Mapping"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-journal-code nav_icon" style="width: 27px;height: 27px;">
+                                <path fill-rule="evenodd" d="M8.646 5.646a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L10.293 8 8.646 6.354a.5.5 0 0 1 0-.708zm-1.292 0a.5.5 0 0 0-.708 0l-2 2a.5.5 0 0 0 0 .708l2 2a.5.5 0 0 0 .708-.708L5.707 8l1.647-1.646a.5.5 0 0 0 0-.708z"></path>
+                                <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"></path>
+                                <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"></path>
+                            </svg><span class="nav_name">Mapping</span></a></div>
+                    <div class="nav_list"><a class="nav_link active" href="#extract" style="padding-left: 11px;" title="Extract"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-shuffle nav_icon" style="width: 27px;height: 27px;">
+                                <path fill-rule="evenodd" d="M0 3.5A.5.5 0 0 1 .5 3H1c2.202 0 3.827 1.24 4.874 2.418.49.552.865 1.102 1.126 1.532.26-.43.636-.98 1.126-1.532C9.173 4.24 10.798 3 13 3v1c-1.798 0-3.173 1.01-4.126 2.082A9.624 9.624 0 0 0 7.556 8a9.624 9.624 0 0 0 1.317 1.918C9.828 10.99 11.204 12 13 12v1c-2.202 0-3.827-1.24-4.874-2.418A10.595 10.595 0 0 1 7 9.05c-.26.43-.636.98-1.126 1.532C4.827 11.76 3.202 13 1 13H.5a.5.5 0 0 1 0-1H1c1.798 0 3.173-1.01 4.126-2.082A9.624 9.624 0 0 0 6.444 8a9.624 9.624 0 0 0-1.317-1.918C4.172 5.01 2.796 4 1 4H.5a.5.5 0 0 1-.5-.5z"></path>
+                                <path d="M13 5.466V1.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384l-2.36 1.966a.25.25 0 0 1-.41-.192zm0 9v-3.932a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384l-2.36 1.966a.25.25 0 0 1-.41-.192z"></path>
+                            </svg><span class="nav_name">Extract</span></a></div>
+                    <div class="nav_list"><a class="nav_link active" href="#" style="padding-left: 11px;" title=""><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-emoji-heart-eyes nav_icon" style="width: 27px;height: 27px;">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
+                                <path d="M11.315 10.014a.5.5 0 0 1 .548.736A4.498 4.498 0 0 1 7.965 13a4.498 4.498 0 0 1-3.898-2.25.5.5 0 0 1 .548-.736h.005l.017.005.067.015.252.055c.215.046.515.108.857.169.693.124 1.522.242 2.152.242.63 0 1.46-.118 2.152-.242a26.58 26.58 0 0 0 1.109-.224l.067-.015.017-.004.005-.002zM4.756 4.566c.763-1.424 4.02-.12.952 3.434-4.496-1.596-2.35-4.298-.952-3.434zm6.488 0c1.398-.864 3.544 1.838-.952 3.434-3.067-3.554.19-4.858.952-3.434z"></path>
+                            </svg><span class="nav_name">Main Menu</span></a></div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <div class="card border-0 shadow todo-card" id="questionnaireslist" style="width: 100%;margin-bottom: 17px;">
+        <div class="fs-3 card-header d-flex align-items-center px-1 bg-primary">
+            <div class="mw-85 d-flex align-items-center text-light" data-bs-toggle="collapse" href="#cardMyCollapse" aria-expanded="false" aria-controls="cardMyCollapse" onclick="rotate(this)">
+                <h5 class="text-truncate fw-normal m-0">Questionnaires</h5>
+            </div><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-chevron-down fs-6 rotate me-1 ms-auto" style="margin-top: 2px; float: right;">
+                <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"></path>
+            </svg>
+        </div>
+        <div class="card-body collapse show p-1" id="cardbody-qlist" style="width: 100%;">
+            <div>
+                <div class="text-start">        <div id="div_source1" style="margin-bottom: 7px;"> Select a questionnaire from the server:   
+            <select id="questionnaires"  onchange="reloadQuestionnaire()">
+            </select>
+        </div>
+                    <p id="questUrl" style="margin-bottom: 7px;">Questionnaire URL: ?<br></p>
+                    <p id="questLocation" style="margin-bottom: 7px;">Questionnaire Location: ?<br></p>
+                    <p id="mapUrl" style="margin-bottom: 7px;">StructureMap URL: ?<br></p>
+                    <p id="mapLocation" style="margin-bottom: 7px;">StructureMap Location: ?<br></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card border-0 shadow todo-card" id="form" style="width: 100%;margin-bottom: 17px;">
+        <div class="fs-2 card-header d-flex align-items-center px-1 bg-primary">
+            <div class="mw-85 d-flex align-items-center text-light">
+                <h5 class="text-truncate fw-normal m-0">Form Filler</h5><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-chevron-down fs-6 rotate me-1 ms-auto" style="margin-top: 2px; float: right;">
+                    <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"></path>
+                </svg>
+            </div>
+        </div>
+        <div class="card-body collapse show p-1" id="cardMyCollapse-1" style="width: 100%;">
+            <div>
+                <div class="text-start" id="formContainer" style="min-height: 100px;"></div>
+            </div>
+            <div style="text-align: right;">
+                <div class="btn-group" role="group"><button class="btn btn-info btn-sm" type="button" onclick="showQR()">Show QR</button><button class="btn btn-secondary btn-sm" type="submit">Upload QR</button></div>
+            </div>
+        </div>
+    </div>
+    <div class="card border-0 shadow todo-card" id="mapping" style="width: 100%;margin-bottom: 17px;">
+        <div class="fs-2 card-header d-flex align-items-center px-1 bg-primary">
+            <div class="mw-85 d-flex align-items-center text-light" data-bs-toggle="collapse" href="#cardMyCollapse" aria-expanded="false" aria-controls="cardMyCollapse" onclick="rotate(this)">
+                <h5 class="text-truncate fw-normal m-0">Mapping</h5>
+            </div><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-chevron-down fs-6 rotate me-1 ms-auto me-1" style="margin-top: 2px;">
+                <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"></path>
+            </svg>
+        </div>
+        <div class="card-body collapse show p-1" id="cardMyCollapse-3" style="width: 100%;">
+            <div>
+                <div class="text-start" style="width: 100%;"></div>
+            </div>
+            <div><textarea id="mappingCode"></textarea>
+                <div class="btn-group" role="group" style="display:block; width: auto;"><button class="btn btn-success btn-sm" type="button" onclick="extractCurrentQR()">Extract</button><button class="btn btn-warning btn-sm" type="submit" onclick="updateMappingAndExtractQR()" style="margin-left: calc(100% - 177px);">Update &amp; Extract</button></div>
+            </div>
+        </div>
+    </div>
+    <div class="card border-0 shadow todo-card" id="extract" style="width: 100%;margin-bottom: 17px;">
+        <div class="fs-2 card-header d-flex align-items-center px-1 bg-primary">
+            <div class="mw-85 d-flex align-items-center text-light" data-bs-toggle="collapse" href="#cardMyCollapse" aria-expanded="false" aria-controls="cardMyCollapse" onclick="rotate(this)">
+                <h5 class="text-truncate fw-normal m-0">Extraction</h5>
+            </div><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-chevron-down fs-6 rotate me-1 ms-auto me-1" style="margin-top: 2px; float: right;">
+                <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"></path>
+            </svg>
+        </div>
+        <div class="card-body collapse show p-1" id="cardMyCollapse-2" style="width: 100%;">
+            <div style="width: 100%;"></div>
+            <div>
+                <div class="row" style="margin: 15px;">
+                    <div class="column" style="width: calc(50% - 20px);">
+                        <p class="fw-bold" style="margin-bottom: 1px;">QuestionnaireResponse<br></p>
+                    </div>
+                    <div class="column" style="width: 35px;"></div>
+                    <div class="column" style="width: calc(50% - 20px);">
+                        <p style="margin-bottom: 1px;font-weight: bold;">Result</p>
+                    </div>
+                </div>
+                <div class="row" style="margin: 15px;">
+                    <div class="column" style="width: calc(50% - 20px);"><textarea id="json-rendererQR"></textarea></div>
+                    <div class="column" style="width: 35px;"><p><br />&rarr;</p></div>
+                    <div class="column" style="width: calc(50% - 20px);"><code id="json-renderer">Text</code></div>
+                </div>
+            </div>
+            <div style="text-align: right;">
+                <div class="btn-group" role="group"><button class="btn btn-warning btn-sm" type="submit">Upload</button></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/zectStudio---Sidebar-Menu-by-bbbootstrap.js"></script>
+    <script src="assets/js/jquery.json-viewer.js"> </script>    <script>
+        var myTextArea = document.getElementById('mappingCode');
+        var myCodeMirror = CodeMirror.fromTextArea(myTextArea, 
+        {
+              lineNumbers:true,
+              direction: "ltr"
+          });
+    </script>
+
+
+<script>
+
+var editorQR;
+document.addEventListener("DOMContentLoaded", function() {
+        editorQR = CodeMirror.fromTextArea(document.getElementById("json-rendererQR"), {
+            lineNumbers: true,
+            mode: "application/json",
+            theme: "default"
+        });
+    });
+
+
+
+        const serverBase="http://localhost:8080/fhir";
+        function reloadQuestionnaire() {
+            var x = document.getElementById("questionnaires");
+            qUrl = x.options[x.selectedIndex].getAttribute('data-url');
+            qId = x.options[x.selectedIndex].getAttribute('value');
+            document.getElementById("questUrl").innerHTML = 'Questionnaire URL: <a  target="_blank" href=' + qUrl + '>' + qUrl + '</a>';
+            ///now GET the questionnaire based on its id, not url
+
+            $.ajax({
+                type: "GET",
+                url: serverBase+"/Questionnaire?url=" + qUrl,
+                dataType: "json",
+                success: function(data) {
+                    fhirQ = data.entry[0].resource;
+                    qLocation = data.entry[0].fullUrl;
+                    document.getElementById("questLocation").innerHTML = 'Questionnaire Location: <a  target="_blank" href=' + qLocation + '>' + qLocation + '</a>';
+                    // Add the form to the page
+                    LForms.Util.addFormToPage(fhirQ, 'formContainer');
+
+                    qrURL = fhirQ.extension.find(ext => ext.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-targetStructureMap").valueCanonical;
+                    document.getElementById("mapUrl").innerHTML = 'Questionnaire URL: <a  target="_blank" href=' + qrURL + '>' + qrURL + '</a>';
+
+                    $.ajax({
+                        type: "GET",
+                        url: serverBase+"/StructureMap?url=" + qrURL,
+                        dataType: "json",
+                        success: function(data) {
+                            smap = data.entry[0].resource;
+                            mLocation = data.entry[0].fullUrl;
+                            // Add the form to the page
+                            document.getElementById("mapLocation").innerHTML = 'StructureMap Location: <a  target="_blank" href=' + mLocation + '>' + mLocation + '</a>';
+                            //                              document.getElementById("mappingCode").innerHTML = $('<div/>').html(smap.text.div).text();
+                            myCodeMirror.setValue($('<div/>').html(smap.text.div).text())
+                            //                              myCodeMirror.setValue(smap.text.div)
+                            //                              myCodeMirror.setValue("NO MAP")
+                        }
+                    });
+                },
+            });
+        }
+ 
+////// GET all Questionnaires from server
+        $(document).ready(function() 
+          { 
+
+          $.ajax({
+                    type: "GET",
+                    url: serverBase+"/Questionnaire?_count=1000",
+                    dataType: "json",
+                    success: function (data) {
+                        var defaultOption = "<option value=''>Select a questionnaire</option>";
+                        $(defaultOption).appendTo('#questionnaires'); 
+                        $.each(data.entry,function(i,obj)
+                        {
+                        var div_data="<option data-url="+obj.resource.url+" value="+obj.resource.id+">"+obj.resource.title+"</option>";
+                        $(div_data).appendTo('#questionnaires'); 
+                        });  
+                        }
+                });
+            });
+
+            function showQR() {
+                var qr = LForms.Util.getFormFHIRData('QuestionnaireResponse', 'R4');
+                console.log(qr);
+                qr.questionnaire=fhirQ.url;
+                try {
+                    var input = JSON.stringify(qr, null, 2); // This will format your JSON with 2 spaces indentation
+                    editorQR.setValue(input); // Assuming your CodeMirror instance is called editorQR
+                }
+                catch (error) {
+                    alert("Cannot stringify JSON: " + error);
+                };
+            }
+
+            function extractQR(){
+              var qr = LForms.Util.getFormFHIRData('QuestionnaireResponse', 'R4');
+              console.log(qr);
+              qr.questionnaire=fhirQ.url;
+              try {
+                var input = eval('(' + JSON.stringify(qr) + ')');
+                $('#json-rendererQR').jsonViewer(input);
+              }
+              catch (error) {
+                alert("Cannot eval JSON: " + error);
+              };
+              $.ajaxSetup({
+                headers: {
+                  'Content-Type': 'application/fhir+json;fhirVersion=4.0',
+                  'Accept': 'application/fhir+json;fhirVersion=4.0'
+                }
+              });
+
+              $.post(serverBase+"/QuestionnaireResponse/$extract",
+                JSON.stringify(qr),
+                function(data, status){
+                    console.log(data);
+                    try {
+                        var input = eval('(' + JSON.stringify(data) + ')');
+                            $('#json-renderer').jsonViewer(input);
+                    }
+                    catch (error) {
+                            alert("Cannot eval JSON: " + error);
+                        }
+              });
+            }
+
+            function extractCurrentQR(){
+                var qrString = editorQR.getValue();
+
+                // Try to parse the content of the editor to a JavaScript object
+                try {
+                    var qr = JSON.parse(qrString);
+                } catch (error) {
+                    alert("Cannot parse JSON: " + error);
+                    return;  // stop the execution of the function
+                }
+
+                $.ajaxSetup({
+                headers: {
+                  'Content-Type': 'application/fhir+json;fhirVersion=4.0',
+                  'Accept': 'application/fhir+json;fhirVersion=4.0'
+                }
+              });
+
+              $.post(serverBase+"/QuestionnaireResponse/$extract",
+                JSON.stringify(qr),
+                function(data, status){
+                    console.log(data);
+                    try {
+                        var input = eval('(' + JSON.stringify(data) + ')');
+                            $('#json-renderer').jsonViewer(input);
+                    }
+                    catch (error) {
+                            alert("Cannot eval JSON: " + error);
+                        }
+              });
+            }
+
+
+        
+            function updateMappingAndExtractQR(){
+              var qr = LForms.Util.getFormFHIRData('QuestionnaireResponse', 'R4');
+              console.log(qr);
+              qr.questionnaire=fhirQ.url;
+              try {
+                var input = eval('(' + JSON.stringify(qr) + ')');
+                $('#json-rendererQR').jsonViewer(input);
+              }
+              catch (error) {
+                alert("Cannot eval JSON: " + error);
+              };
+
+
+
+              $.ajax({
+                type: "POST",
+                url: serverBase+"/StructureMap",
+                contentType: 'text/fhir-mapping',
+                headers: {          
+                Accept: "application/fhir+json;fhirVersion=4.0",         
+                "Content-Type": "text/fhir-mapping"   
+                },
+                data: myCodeMirror.getValue(), //once we have codeMirror working
+        //        data: document.getElementById("mappingCode").value,
+                success: function (data) {
+                    console.log(data);
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                alert(textStatus);
+                }     
+            });
+
+
+              //                console.log(JSON.stringify(qr));    
+              $.ajaxSetup({
+                headers: {
+                  'Content-Type': 'application/fhir+json;fhirVersion=4.0',
+                  'Accept': 'application/fhir+json;fhirVersion=4.0'
+                }
+              });
+
+              $.post(serverBase+"/QuestionnaireResponse/$extract",
+                JSON.stringify(qr),
+                function(data, status){
+                    console.log(data);
+                    try {
+                        var input = eval('(' + JSON.stringify(data) + ')');
+                            $('#json-renderer').jsonViewer(input);
+                    }
+                    catch (error) {
+                            alert("Cannot eval JSON: " + error);
+                        }
+              });
+            }
+        </script>
+
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/zectStudio---Sidebar-Menu-by-bbbootstrap.js"></script>
+    <script src="assets/js/codemirror.js"></script>
+    <script src="assets/js/Collapse-card.js"></script>
+    <script src="assets/js/jquery.json-viewer.js"></script>
+</body>
+
+</html>

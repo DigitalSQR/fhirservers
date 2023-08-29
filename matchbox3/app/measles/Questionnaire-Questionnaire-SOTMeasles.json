@@ -1,0 +1,1043 @@
+{
+  "resourceType": "Questionnaire",
+  "id": "Questionnaire-SOTMeasles",
+  "meta": {
+    "profile": [
+      "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-extr-smap"
+    ]
+  },
+  "extension": [
+    {
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-targetStructureMap",
+      "valueCanonical": "http://ritikarawlani.github.io/smart-outbreak-measles/StructureMap/MeaslesQuestionnaireToLogicalModel"
+    }
+  ],
+  "url": "http://ritikarawlani.github.io/smart-outbreak-measles/Questionnaire/Questionnaire-SOTMeasles",
+  "title": "Measles Case Investigation Questionnaire",
+  "description": "Measles Case Investigation Questionnaire",
+  "name": "Questionnaire-SOTMeasles",
+  "version": "2023",
+  "status": "draft",
+  "subjectType": [
+    "Patient"
+  ],
+  "language": "en",
+  "contained": [
+    {
+      "resourceType": "ValueSet",
+      "id": "InitDiag",
+      "status": "draft",
+      "name": "InitDiag",
+      "title": "SOT Measles Initial Diagnosis",
+      "description": "SOT Measles Initial Diagnosis",
+      "url": "http://ritikarawlani.github.io/smart-outbreak-measles/ValueSet/InitDiag",
+      "version": "0.2.1",
+      "expansion": {
+        "identifier": "urn:uuid:c060c134-871f-43be-b1ee-5dfface2c18f",
+        "timestamp": "2023-05-02T20:23:35+05:30",
+        "total": 6,
+        "parameter": [
+          {
+            "name": "excludeNested",
+            "valueBoolean": false
+          },
+          {
+            "name": "version",
+            "valueUri": "http://ritikarawlani.github.io/smart-outbreak-measles/InitDiag|0.2.1"
+          }
+        ],
+        "contains": [
+          {
+            "system": "http://ritikarawlani.github.io/smart-outbreak-measles/InitDiag",
+            "code": "1",
+            "display": "Measles"
+          },
+          {
+            "system": "http://ritikarawlani.github.io/smart-outbreak-measles/InitDiag",
+            "code": "2",
+            "display": "Rubella"
+          },
+          {
+            "system": "http://ritikarawlani.github.io/smart-outbreak-measles/InitDiag",
+            "code": "3",
+            "display": "Dengue"
+          },
+          {
+            "system": "http://ritikarawlani.github.io/smart-outbreak-measles/InitDiag",
+            "code": "4",
+            "display": "Other Rash illness"
+          },
+          {
+            "system": "http://ritikarawlani.github.io/smart-outbreak-measles/InitDiag",
+            "code": "8",
+            "display": "Other Non-Rash illness"
+          },
+          {
+            "system": "http://ritikarawlani.github.io/smart-outbreak-measles/InitDiag",
+            "code": "99",
+            "display": "Unknown"
+          }
+        ]
+      }
+    },
+    {
+      "resourceType": "ValueSet",
+      "id": "YesNoUnknown",
+      "status": "draft",
+      "name": "YesNoUnknown",
+      "title": "Yes No Unknown",
+      "description": "Yes No Unknown",
+      "url": "http://ritikarawlani.github.io/smart-outbreak-measles/ValueSet/YesNoUnknown",
+      "compose": {
+        "include": [
+          {
+            "system": "http://ritikarawlani.github.io/smart-outbreak-measles/YesNoUnknown"
+          }
+        ]
+      }
+    }
+  ],
+  "item": [
+    {
+      "linkId": "investigationForm",
+      "text": "Investigation Form for Measles/Rubella",
+      "type": "group",
+      "repeats": false,
+      "item": [
+        {
+          "linkId": "description",
+          "text": "Complete this form for: Any person in whom a health care worker suspects measles or rubella infection or a patient with fever and rash. The health worker should attempt to collect epidemiological and clinical data , as well as a blood sample , on the first contact with the patient. This contact with the patient might be the only one.",
+          "type": "display",
+          "repeats": false
+        },
+        {
+          "linkId": "reportingSource",
+          "text": "Section I: Identification of the Reporting Institution",
+          "type": "group",
+          "repeats": false,
+          "item": [
+            {
+              "linkId": "initialDiagnosis",
+              "text": "Initial Diagnosis",
+              "type": "choice",
+              "repeats": false,
+              "answerValueSet": "http://ritikarawlani.github.io/smart-outbreak-measles/ValueSet/InitDiag"
+            },
+            {
+              "linkId": "caseID",
+              "text": "Case Number",
+              "type": "string",
+              "repeats": false
+            },
+            {
+              "linkId": "reportingInstitution",
+              "text": "Reporting Institution",
+              "type": "group",
+              "repeats": false,
+              "item": [
+                {
+                  "linkId": "reportingFacility",
+                  "text": "Health Service Name",
+                  "type": "string",
+                  "repeats": false
+                },
+                {
+                  "linkId": "telephone",
+                  "text": "Health Service Telephone",
+                  "type": "string",
+                  "repeats": false
+                },
+                {
+                  "linkId": "country",
+                  "text": "Country",
+                  "type": "string",
+                  "repeats": false
+                },
+                {
+                  "linkId": "municipality",
+                  "text": "Municipality",
+                  "type": "string",
+                  "repeats": false
+                },
+                {
+                  "linkId": "state",
+                  "text": "Province/State",
+                  "type": "string",
+                  "repeats": false
+                },
+                {
+                  "linkId": "locality",
+                  "text": "Locality/Neighborhood",
+                  "type": "string",
+                  "repeats": false
+                }
+              ]
+            },
+            {
+              "linkId": "reportedBy",
+              "text": "Reported By",
+              "type": "string",
+              "repeats": false
+            },
+            {
+              "linkId": "DateOfConsultation",
+              "text": "Date Of Consultation",
+              "type": "date",
+              "repeats": false
+            },
+            {
+              "linkId": "DateOfHomeVisit",
+              "text": "Date Of Home Visit",
+              "type": "date",
+              "repeats": false
+            },
+            {
+              "linkId": "dateReported",
+              "text": "Date Reported - Local",
+              "type": "date",
+              "repeats": false
+            },
+            {
+              "linkId": "DateReportedNational",
+              "text": "Date Reported - National",
+              "type": "date",
+              "repeats": false
+            },
+            {
+              "linkId": "DetectedBy",
+              "text": "Detected By",
+              "type": "choice",
+              "repeats": false,
+              "answerValueSet": "http://ritikarawlani.github.io/smart-outbreak-measles/ValueSet/DetectedBy"
+            },
+            {
+              "linkId": "TypeOfProviderReporting",
+              "text": "Type Of Provider Reporting",
+              "type": "choice",
+              "repeats": false,
+              "answerValueSet": "http://ritikarawlani.github.io/smart-outbreak-measles/ValueSet/ProvType"
+            },
+            {
+              "linkId": "specifyother",
+              "text": "Specify",
+              "type": "string",
+              "repeats": false,
+              "enableWhen": [
+                {
+                  "question": "TypeOfProviderReporting",
+                  "operator": "=",
+                  "answerCoding": {
+                    "system": "http://ritikarawlani.github.io/smart-outbreak-measles/ProvType",
+                    "code": "88"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "linkId": "demographics",
+          "text": "Section II: Patient Information",
+          "type": "group",
+          "repeats": false,
+          "item": [
+            {
+              "linkId": "name",
+              "text": "Patient’s first and last names",
+              "type": "string",
+              "repeats": false
+            },
+            {
+              "linkId": "guardian",
+              "text": "Name of the mother or guardian",
+              "type": "string",
+              "repeats": false
+            },
+            {
+              "linkId": "address",
+              "text": "Address",
+              "type": "string",
+              "repeats": false
+            },
+            {
+              "linkId": "telephone",
+              "text": "Telephone",
+              "type": "string",
+              "repeats": false
+            },
+            {
+              "linkId": "landmark",
+              "text": "Landmarks to locate the house",
+              "type": "string",
+              "repeats": false
+            },
+            {
+              "linkId": "occupation",
+              "text": "Patient’s Occupation",
+              "type": "string",
+              "repeats": false
+            },
+            {
+              "linkId": "localityType",
+              "text": "Type of locality",
+              "type": "choice",
+              "repeats": false,
+              "answerValueSet": "http://ritikarawlani.github.io/smart-outbreak-measles/ValueSet/LocType"
+            },
+            {
+              "linkId": "workAddress",
+              "text": "Work or school address",
+              "type": "string",
+              "repeats": false
+            },
+            {
+              "linkId": "sex",
+              "text": "Patient’s sex",
+              "type": "choice",
+              "repeats": false,
+              "answerValueSet": "http://ritikarawlani.github.io/smart-outbreak-measles/ValueSet/BiologicalSex"
+            },
+            {
+              "linkId": "DoB",
+              "text": "Patient’s Date of Birth",
+              "type": "date",
+              "repeats": false
+            },
+            {
+              "linkId": "ageOnset",
+              "text": "If date of birth is unknown, age",
+              "type": "integer",
+              "repeats": false
+            }
+          ]
+        },
+        {
+          "linkId": "vaccinationStatus",
+          "text": "Section III: Vaccination History",
+          "type": "group",
+          "repeats": true,
+          "item": [
+            {
+              "linkId": "vaccineType",
+              "text": "Type of Vaccine*",
+              "type": "choice",
+              "repeats": false,
+              "answerValueSet": "http://ritikarawlani.github.io/smart-outbreak-measles/ValueSet/VaccineType"
+            },
+            {
+              "linkId": "noOfDoses",
+              "text": "Number of doses**",
+              "type": "choice",
+              "repeats": false,
+              "answerValueSet": "http://ritikarawlani.github.io/smart-outbreak-measles/ValueSet/NoOfDoses"
+            },
+            {
+              "linkId": "lastDoseDate",
+              "text": "Date of last dose",
+              "type": "date",
+              "repeats": false
+            },
+            {
+              "linkId": "sourceOfInformation",
+              "text": "Source of vaccination Information †",
+              "type": "choice",
+              "repeats": false,
+              "answerValueSet": "http://ritikarawlani.github.io/smart-outbreak-measles/ValueSet/SourceOfInformation"
+            }
+          ]
+        },
+        {
+          "linkId": "clinical",
+          "text": "Section IV: Clinical Data; Follow-up & Treatment",
+          "type": "group",
+          "repeats": false,
+          "item": [
+            {
+              "linkId": "fever",
+              "text": "Fever?",
+              "type": "choice",
+              "repeats": false,
+              "answerValueSet": "http://ritikarawlani.github.io/smart-outbreak-measles/ValueSet/YesNoUnknown"
+            },
+            {
+              "linkId": "temperature",
+              "text": "If Yes, temperature (°)",
+              "type": "decimal",
+              "repeats": false,
+              "enableWhen": [
+                {
+                  "question": "fever",
+                  "operator": "=",
+                  "answerCoding": {
+                    "system": "http://ritikarawlani.github.io/smart-outbreak-measles/YesNoUnknown",
+                    "code": "Yes"
+                  }
+                }
+              ]
+            },
+            {
+              "linkId": "dateOfFeverOnset",
+              "text": "Date of fever onset",
+              "type": "date",
+              "repeats": false,
+              "enableWhen": [
+                {
+                  "question": "fever",
+                  "operator": "=",
+                  "answerCoding": {
+                    "system": "http://ritikarawlani.github.io/smart-outbreak-measles/YesNoUnknown",
+                    "code": "Yes"
+                  }
+                }
+              ]
+            },
+            {
+              "linkId": "rash",
+              "text": "Rash?",
+              "type": "choice",
+              "repeats": false,
+              "answerValueSet": "http://ritikarawlani.github.io/smart-outbreak-measles/ValueSet/YesNoUnknown"
+            },
+            {
+              "linkId": "rashDuration",
+              "text": "If Yes, duration of the rash(in days)",
+              "type": "integer",
+              "repeats": false,
+              "enableWhen": [
+                {
+                  "question": "rash",
+                  "operator": "=",
+                  "answerCoding": {
+                    "system": "http://ritikarawlani.github.io/smart-outbreak-measles/YesNoUnknown",
+                    "code": "Yes"
+                  }
+                }
+              ]
+            },
+            {
+              "linkId": "rashOnsetDate",
+              "text": "Date of rash onset",
+              "type": "date",
+              "repeats": false,
+              "enableWhen": [
+                {
+                  "question": "rash",
+                  "operator": "=",
+                  "answerCoding": {
+                    "system": "http://ritikarawlani.github.io/smart-outbreak-measles/YesNoUnknown",
+                    "code": "Yes"
+                  }
+                }
+              ]
+            },
+            {
+              "linkId": "rashType",
+              "text": "Type of rash",
+              "type": "choice",
+              "repeats": false,
+              "enableWhen": [
+                {
+                  "question": "rash",
+                  "operator": "=",
+                  "answerCoding": {
+                    "system": "http://ritikarawlani.github.io/smart-outbreak-measles/YesNoUnknown",
+                    "code": "Yes"
+                  }
+                }
+              ]
+            },
+            {
+              "linkId": "cough",
+              "text": "Cough?",
+              "type": "choice",
+              "repeats": false,
+              "answerValueSet": "http://ritikarawlani.github.io/smart-outbreak-measles/ValueSet/YesNoUnknown"
+            },
+            {
+              "linkId": "conjunctivitis",
+              "text": "Conjunctivitis?",
+              "type": "choice",
+              "repeats": false,
+              "answerValueSet": "http://ritikarawlani.github.io/smart-outbreak-measles/ValueSet/YesNoUnknown"
+            },
+            {
+              "linkId": "coryza",
+              "text": "Coryza?",
+              "type": "choice",
+              "repeats": false,
+              "answerValueSet": "http://ritikarawlani.github.io/smart-outbreak-measles/ValueSet/YesNoUnknown"
+            },
+            {
+              "linkId": "koplikSpots",
+              "text": "Koplik Spots?",
+              "type": "choice",
+              "repeats": false,
+              "answerValueSet": "http://ritikarawlani.github.io/smart-outbreak-measles/ValueSet/YesNoUnknown"
+            },
+            {
+              "linkId": "lymphadenopathy",
+              "text": "Lymphadenopathy?",
+              "type": "choice",
+              "repeats": false,
+              "answerValueSet": "http://ritikarawlani.github.io/smart-outbreak-measles/ValueSet/YesNoUnknown"
+            },
+            {
+              "linkId": "jointPain",
+              "text": "Arthralgia?",
+              "type": "choice",
+              "repeats": false,
+              "answerValueSet": "http://ritikarawlani.github.io/smart-outbreak-measles/ValueSet/YesNoUnknown"
+            },
+            {
+              "linkId": "pregnancy",
+              "text": "Is the patient pregnant?",
+              "type": "choice",
+              "repeats": false,
+              "answerValueSet": "http://ritikarawlani.github.io/smart-outbreak-measles/ValueSet/YesNoUnknown"
+            },
+            {
+              "linkId": "monthsPregnant",
+              "text": "Weeks of pregnancy (01-42)",
+              "type": "integer",
+              "repeats": false,
+              "enableWhen": [
+                {
+                  "question": "pregnancy",
+                  "operator": "=",
+                  "answerCoding": {
+                    "system": "http://ritikarawlani.github.io/smart-outbreak-measles/YesNoUnknown",
+                    "code": "Yes"
+                  }
+                }
+              ]
+            },
+            {
+              "linkId": "placeOfBirth",
+              "text": "If Yes, Place where birth will likely take place",
+              "type": "string",
+              "repeats": false,
+              "enableWhen": [
+                {
+                  "question": "pregnancy",
+                  "operator": "=",
+                  "answerCoding": {
+                    "system": "http://ritikarawlani.github.io/smart-outbreak-measles/YesNoUnknown",
+                    "code": "Yes"
+                  }
+                }
+              ]
+            },
+            {
+              "linkId": "admitted",
+              "text": "Hospitalized?",
+              "type": "choice",
+              "repeats": false,
+              "answerValueSet": "http://ritikarawlani.github.io/smart-outbreak-measles/ValueSet/YesNoUnknown"
+            },
+            {
+              "linkId": "admittedHCFName",
+              "text": "Hospital name",
+              "type": "string",
+              "repeats": false,
+              "enableWhen": [
+                {
+                  "question": "admitted",
+                  "operator": "=",
+                  "answerCoding": {
+                    "system": "http://ritikarawlani.github.io/smart-outbreak-measles/YesNoUnknown",
+                    "code": "Yes"
+                  }
+                }
+              ]
+            },
+            {
+              "linkId": "admissionDate",
+              "text": "If Yes, Date of admission",
+              "type": "date",
+              "repeats": false,
+              "enableWhen": [
+                {
+                  "question": "admitted",
+                  "operator": "=",
+                  "answerCoding": {
+                    "system": "http://ritikarawlani.github.io/smart-outbreak-measles/YesNoUnknown",
+                    "code": "Yes"
+                  }
+                }
+              ]
+            },
+            {
+              "linkId": "hospitalRecordNumber",
+              "text": "Hospital record number",
+              "type": "string",
+              "repeats": false,
+              "enableWhen": [
+                {
+                  "question": "admitted",
+                  "operator": "=",
+                  "answerCoding": {
+                    "system": "http://ritikarawlani.github.io/smart-outbreak-measles/YesNoUnknown",
+                    "code": "Yes"
+                  }
+                }
+              ]
+            },
+            {
+              "linkId": "outcome",
+              "text": "Death?",
+              "type": "choice",
+              "repeats": false,
+              "answerValueSet": "http://ritikarawlani.github.io/smart-outbreak-measles/ValueSet/PatientOutcome"
+            },
+            {
+              "linkId": "outcomeDate",
+              "text": "If Yes, Date of death",
+              "type": "date",
+              "repeats": false,
+              "enableWhen": [
+                {
+                  "question": "outcome",
+                  "operator": "=",
+                  "answerCoding": {
+                    "system": "http://ritikarawlani.github.io/smart-outbreak-measles/ValueSet/PatientOutcome",
+                    "code": "Death"
+                  }
+                }
+              ]
+            },
+            {
+              "linkId": "primaryCauseOfDeath",
+              "text": "Primary cause of death",
+              "type": "string",
+              "repeats": false,
+              "enableWhen": [
+                {
+                  "question": "outcome",
+                  "operator": "=",
+                  "answerCoding": {
+                    "system": "http://ritikarawlani.github.io/smart-outbreak-measles/ValueSet/PatientOutcome",
+                    "code": "Death"
+                  }
+                }
+              ]
+            },
+            {
+              "linkId": "diseaseAdditionalInfo",
+              "text": "Comments",
+              "type": "string",
+              "repeats": false
+            }
+          ]
+        },
+        {
+          "linkId": "laboratoryResults",
+          "text": "Section V: Specimens & Laboratory Testing",
+          "type": "group",
+          "repeats": false,
+          "item": [
+            {
+              "linkId": "specimenNumber",
+              "text": "Specimen number*",
+              "type": "choice",
+              "repeats": false,
+              "answerValueSet": "http://ritikarawlani.github.io/smart-outbreak-measles/ValueSet/SpecimenNumber"
+            },
+            {
+              "linkId": "sampleType",
+              "text": "Type of specimen**",
+              "type": "choice",
+              "repeats": false,
+              "answerValueSet": "http://ritikarawlani.github.io/smart-outbreak-measles/ValueSet/SampleType"
+            },
+            {
+              "linkId": "collectionDate",
+              "text": "Date specimen obtained",
+              "type": "date",
+              "repeats": false
+            },
+            {
+              "linkId": "labName",
+              "text": "Laboratory Name",
+              "type": "string",
+              "repeats": false
+            },
+            {
+              "linkId": "specimenSentDate",
+              "text": "Date specimen was sent to lab",
+              "type": "date",
+              "repeats": false
+            },
+            {
+              "linkId": "specimenReceivedDate",
+              "text": "Date Received",
+              "type": "date",
+              "repeats": false
+            },
+            {
+              "linkId": "sampleId",
+              "text": "# specimen ID in lab.",
+              "type": "string",
+              "repeats": false
+            },
+            {
+              "linkId": "testPerformed",
+              "text": "Type of test",
+              "type": "choice",
+              "repeats": false,
+              "answerValueSet": "http://ritikarawlani.github.io/smart-outbreak-measles/ValueSet/TestPerformed"
+            },
+            {
+              "linkId": "antigen",
+              "text": "Antigen",
+              "type": "choice",
+              "repeats": false,
+              "answerValueSet": "http://ritikarawlani.github.io/smart-outbreak-measles/ValueSet/Antigen"
+            },
+            {
+              "linkId": "result",
+              "text": "Result",
+              "type": "choice",
+              "repeats": false,
+              "answerValueSet": "http://ritikarawlani.github.io/smart-outbreak-measles/ValueSet/Result"
+            },
+            {
+              "linkId": "resultDate",
+              "text": "Date of Results",
+              "type": "date",
+              "repeats": false
+            },
+            {
+              "linkId": "specifyVirus",
+              "text": "If virus was detected, specify viral genotype: (Measles: A, B1, B2, B3, C1, C2, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, E, F, G1, G2, G3, H1, H2. Rubella: 1a, 1B, 1C,\n1D, 1E, 1F, 1g, 2A, 2B, 2c)",
+              "type": "string",
+              "repeats": false
+            }
+          ]
+        },
+        {
+          "linkId": "contactTracing",
+          "text": "Section VI: Investigation",
+          "type": "group",
+          "repeats": false,
+          "item": [
+            {
+              "linkId": "caseSearchConducted",
+              "text": "Were active case-searches conducted?",
+              "type": "choice",
+              "repeats": false,
+              "answerValueSet": "http://ritikarawlani.github.io/smart-outbreak-measles/ValueSet/YesNoUnknown"
+            },
+            {
+              "linkId": "noOfsuspectCases",
+              "text": "If Yes, Number of suspect cases detected during active case-search",
+              "type": "integer",
+              "repeats": false,
+              "enableWhen": [
+                {
+                  "question": "caseSearchConducted",
+                  "operator": "=",
+                  "answerCoding": {
+                    "system": "http://ritikarawlani.github.io/smart-outbreak-measles/YesNoUnknown",
+                    "code": "Yes"
+                  }
+                }
+              ]
+            },
+            {
+              "linkId": "pregnantContact",
+              "text": "Was the patient in contact with any pregnant woman?",
+              "type": "choice",
+              "repeats": false,
+              "answerValueSet": "http://ritikarawlani.github.io/smart-outbreak-measles/ValueSet/YesNoUnknown"
+            },
+            {
+              "linkId": "pregnantContactNames",
+              "text": "If Yes, Name(s)",
+              "type": "string",
+              "repeats": false,
+              "enableWhen": [
+                {
+                  "question": "pregnantContact",
+                  "operator": "=",
+                  "answerCoding": {
+                    "system": "http://ritikarawlani.github.io/smart-outbreak-measles/YesNoUnknown",
+                    "code": "Yes"
+                  }
+                }
+              ]
+            },
+            {
+              "linkId": "localCasesPresent",
+              "text": "Are there other cases present in the case’s municipality of residence?",
+              "type": "choice",
+              "repeats": false,
+              "answerValueSet": "http://ritikarawlani.github.io/smart-outbreak-measles/ValueSet/LocalCasesPresent"
+            },
+            {
+              "linkId": "travelledOutside",
+              "text": "Did the patient travel outside his/her province/state of residence 7-23 days before rash onset?",
+              "type": "choice",
+              "repeats": false,
+              "answerValueSet": "http://ritikarawlani.github.io/smart-outbreak-measles/ValueSet/YesNoUnknown"
+            },
+            {
+              "linkId": "travelDetails",
+              "text": "If Yes,:",
+              "type": "group",
+              "repeats": true,
+              "item": [
+                {
+                  "linkId": "placeOfTravel",
+                  "text": "Cities/Countries",
+                  "type": "string",
+                  "repeats": false
+                },
+                {
+                  "linkId": "arrivalDate",
+                  "text": "Date of arrival",
+                  "type": "date",
+                  "repeats": false
+                },
+                {
+                  "linkId": "departureDate",
+                  "text": "Date of departure",
+                  "type": "date",
+                  "repeats": false
+                }
+              ],
+              "enableWhen": [
+                {
+                  "question": "travelledOutside",
+                  "operator": "=",
+                  "answerCoding": {
+                    "system": "http://ritikarawlani.github.io/smart-outbreak-measles/YesNoUnknown",
+                    "code": "Yes"
+                  }
+                }
+              ]
+            },
+            {
+              "linkId": "infectionSetting",
+              "text": "Setting where infected?",
+              "type": "choice",
+              "repeats": false,
+              "answerValueSet": "http://ritikarawlani.github.io/smart-outbreak-measles/ValueSet/InfectionSetting"
+            },
+            {
+              "linkId": "specifyInfectionSetting",
+              "text": "Specify",
+              "type": "string",
+              "repeats": false,
+              "enableWhen": [
+                {
+                  "question": "infectionSetting",
+                  "operator": "=",
+                  "answerCoding": {
+                    "system": "http://ritikarawlani.github.io/smart-outbreak-measles/InfectionSetting",
+                    "code": "88"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "linkId": "epiData",
+          "text": "Section VII: Response Measures",
+          "type": "group",
+          "repeats": false,
+          "item": [
+            {
+              "linkId": "ringVaccination",
+              "text": "Ring vaccination?",
+              "type": "choice",
+              "repeats": false,
+              "answerValueSet": "http://ritikarawlani.github.io/smart-outbreak-measles/ValueSet/YesNoUnknown"
+            },
+            {
+              "linkId": "dateStarted",
+              "text": "Date started",
+              "type": "date",
+              "repeats": false,
+              "enableWhen": [
+                {
+                  "question": "ringVaccination",
+                  "operator": "=",
+                  "answerCoding": {
+                    "system": "http://ritikarawlani.github.io/smart-outbreak-measles/YesNoUnknown",
+                    "code": "Yes"
+                  }
+                }
+              ]
+            },
+            {
+              "linkId": "dateEnded",
+              "text": "Date Ended",
+              "type": "date",
+              "repeats": false,
+              "enableWhen": [
+                {
+                  "question": "ringVaccination",
+                  "operator": "=",
+                  "answerCoding": {
+                    "system": "http://ritikarawlani.github.io/smart-outbreak-measles/YesNoUnknown",
+                    "code": "Yes"
+                  }
+                }
+              ]
+            },
+            {
+              "linkId": "noOfDosesRingVaccination",
+              "text": "Number of doses given during ring vaccination",
+              "type": "integer",
+              "repeats": false,
+              "enableWhen": [
+                {
+                  "question": "ringVaccination",
+                  "operator": "=",
+                  "answerCoding": {
+                    "system": "http://ritikarawlani.github.io/smart-outbreak-measles/YesNoUnknown",
+                    "code": "Yes"
+                  }
+                }
+              ]
+            },
+            {
+              "linkId": "rapidCoverageMonitioring",
+              "text": "Was rapid coverage monitoring done",
+              "type": "choice",
+              "repeats": false,
+              "answerValueSet": "http://ritikarawlani.github.io/smart-outbreak-measles/ValueSet/YesNoUnknown"
+            },
+            {
+              "linkId": "percentVaccinated",
+              "text": "If yes, what % of vaccinated persons was found?",
+              "type": "integer",
+              "repeats": false,
+              "enableWhen": [
+                {
+                  "question": "rapidCoverageMonitioring",
+                  "operator": "=",
+                  "answerCoding": {
+                    "system": "http://ritikarawlani.github.io/smart-outbreak-measles/YesNoUnknown",
+                    "code": "Yes"
+                  }
+                }
+              ]
+            },
+            {
+              "linkId": "contactTracingDone",
+              "text": "Were the contacts followed for up to 30 days after the date of the rash onset of the case?",
+              "type": "choice",
+              "repeats": false,
+              "answerValueSet": "http://ritikarawlani.github.io/smart-outbreak-measles/ValueSet/YesNoUnknown"
+            },
+            {
+              "linkId": "lastFollowUp",
+              "text": "If yes, date of the last day of contact follow-up",
+              "type": "date",
+              "repeats": false,
+              "enableWhen": [
+                {
+                  "question": "contactTracingDone",
+                  "operator": "=",
+                  "answerCoding": {
+                    "system": "http://ritikarawlani.github.io/smart-outbreak-measles/YesNoUnknown",
+                    "code": "Yes"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "linkId": "classification",
+          "text": "Section VIII: Classification",
+          "type": "group",
+          "repeats": false,
+          "item": [
+            {
+              "linkId": "finalClassification",
+              "text": "Final Classification",
+              "type": "choice",
+              "repeats": false,
+              "answerValueSet": "http://ritikarawlani.github.io/smart-outbreak-measles/ValueSet/FinalClassification"
+            },
+            {
+              "linkId": "confirmationBasis",
+              "text": "Basis for confirmation",
+              "type": "choice",
+              "repeats": false,
+              "answerValueSet": "http://ritikarawlani.github.io/smart-outbreak-measles/ValueSet/ConfirmationBasis"
+            },
+            {
+              "linkId": "countryImportation",
+              "text": "If Imported or Import-related, Country of importation",
+              "type": "string",
+              "repeats": false,
+              "enableWhen": [
+                {
+                  "question": "confirmationBasis",
+                  "operator": "=",
+                  "answerCoding": {
+                    "system": "http://ritikarawlani.github.io/smart-outbreak-measles/ConfirmationBasis",
+                    "code": "1"
+                  }
+                }
+              ]
+            },
+            {
+              "linkId": "discardingBasis",
+              "text": "Basis for discarding",
+              "type": "choice",
+              "repeats": false,
+              "answerValueSet": "http://ritikarawlani.github.io/smart-outbreak-measles/ValueSet/DiscardingBasis"
+            },
+            {
+              "linkId": "sourceOfInfection",
+              "text": "For confirmed cases, Source of infection",
+              "type": "choice",
+              "repeats": false,
+              "answerValueSet": "http://ritikarawlani.github.io/smart-outbreak-measles/ValueSet/SourceOfInfection"
+            },
+            {
+              "linkId": "contact",
+              "text": "Contact of another case?",
+              "type": "choice",
+              "repeats": false,
+              "answerValueSet": "http://ritikarawlani.github.io/smart-outbreak-measles/ValueSet/YesNoUnknown"
+            },
+            {
+              "linkId": "contactCaseNo",
+              "text": "Contact of (or epidemiologically-linked to) case number",
+              "type": "string",
+              "repeats": false,
+              "enableWhen": [
+                {
+                  "question": "contact",
+                  "operator": "=",
+                  "answerCoding": {
+                    "system": "http://ritikarawlani.github.io/smart-outbreak-measles/YesNoUnknown",
+                    "code": "Yes"
+                  }
+                }
+              ]
+            },
+            {
+              "linkId": "classifiedBy",
+              "text": "Classified by",
+              "type": "string",
+              "repeats": false
+            },
+            {
+              "linkId": "classificationDate",
+              "text": "Date of final classification",
+              "type": "date",
+              "repeats": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

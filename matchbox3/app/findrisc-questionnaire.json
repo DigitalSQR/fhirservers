@@ -1,0 +1,583 @@
+{
+    "resourceType": "Questionnaire",
+    "id": "findrisc-questionnaire",
+    "meta": {
+      "versionId": "1",
+      "lastUpdated": "2021-12-03T21:28:53.675+00:00",
+      "source": "#w4P7vzgN5BJLWsrY"
+    },
+    "language": "en",
+    "extension": [
+      {
+        "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-targetStructureMap",
+        "valueCanonical": "http://hl7belgium.org/mapping/StructureMap/extractfindrisc"
+      },
+      {
+        "url": "http://hl7.org/fhir/StructureDefinition/variable",
+        "valueExpression": {
+          "name": "scoreExt",
+          "language": "text/fhirpath",
+          "expression": "'http://hl7.org/fhir/StructureDefinition/ordinalValue'"
+        }
+      },
+      {
+        "url": "http://hl7.org/fhir/StructureDefinition/variable",
+        "valueExpression": {
+          "name": "ageValue",
+          "language": "text/fhirpath",
+          "expression": "%questionnaire.item.where(linkId = 'age').answerOption.where(valueCoding.code=%resource.item.where(linkId = 'age').answer.valueCoding.code).extension.where(url=%scoreExt).valueDecimal"
+        }
+      },
+      {
+        "url": "http://hl7.org/fhir/StructureDefinition/variable",
+        "valueExpression": {
+          "name": "bmiValue",
+          "language": "text/fhirpath",
+          "expression": "%questionnaire.item.where(linkId = 'bmi').answerOption.where(valueCoding.code=%resource.item.where(linkId = 'bmi').answer.valueCoding.code).extension.where(url=%scoreExt).valueDecimal"
+        }
+      },
+      {
+        "url": "http://hl7.org/fhir/StructureDefinition/variable",
+        "valueExpression": {
+          "name": "waistcircumferenceValue",
+          "language": "text/fhirpath",
+          "expression": "%questionnaire.item.where(linkId = 'waistcircumference').answerOption.where(valueCoding.code=%resource.item.where(linkId = 'waistcircumference').answer.valueCoding.code).extension.where(url=%scoreExt).valueDecimal"
+        }
+      },
+      {
+        "url": "http://hl7.org/fhir/StructureDefinition/variable",
+        "valueExpression": {
+          "name": "physicalActivityValue",
+          "language": "text/fhirpath",
+          "expression": "%questionnaire.item.where(linkId = 'physicalActivity').answerOption.where(valueCoding.code=%resource.item.where(linkId = 'physicalActivity').answer.valueCoding.code).extension.where(url=%scoreExt).valueDecimal"
+        }
+      },
+      {
+        "url": "http://hl7.org/fhir/StructureDefinition/variable",
+        "valueExpression": {
+          "name": "fruitsvegsValue",
+          "language": "text/fhirpath",
+          "expression": "%questionnaire.item.where(linkId = 'fruitsvegs').answerOption.where(valueCoding.code=%resource.item.where(linkId = 'fruitsvegs').answer.valueCoding.code).extension.where(url=%scoreExt).valueDecimal"
+        }
+      },
+      {
+        "url": "http://hl7.org/fhir/StructureDefinition/variable",
+        "valueExpression": {
+          "name": "BPmedsValue",
+          "language": "text/fhirpath",
+          "expression": "%questionnaire.item.where(linkId = 'BPmeds').answerOption.where(valueCoding.code=%resource.item.where(linkId = 'BPmeds').answer.valueCoding.code).extension.where(url=%scoreExt).valueDecimal"
+        }
+      },
+      {
+        "url": "http://hl7.org/fhir/StructureDefinition/variable",
+        "valueExpression": {
+          "name": "histHyperglicemiaValue",
+          "language": "text/fhirpath",
+          "expression": "%questionnaire.item.where(linkId = 'histHyperglicemia').answerOption.where(valueCoding.code=%resource.item.where(linkId = 'histHyperglicemia').answer.valueCoding.code).extension.where(url=%scoreExt).valueDecimal"
+        }
+      },
+      {
+        "url": "http://hl7.org/fhir/StructureDefinition/variable",
+        "valueExpression": {
+          "name": "familyHistDiabetesValue",
+          "language": "text/fhirpath",
+          "expression": "%questionnaire.item.where(linkId = 'familyHistDiabetes').answerOption.where(valueCoding.code=%resource.item.where(linkId = 'familyHistDiabetes').answer.valueCoding.code).extension.where(url=%scoreExt).valueDecimal"
+        }
+      },
+      {
+        "url": "http://hl7.org/fhir/StructureDefinition/variable",
+        "valueExpression": {
+          "name": "allQuestionsAnswered",
+          "language": "text/fhirpath",
+          "expression": "%ageValue.exists() and %bmiValue.exists() and %waistcircumferenceValue.exists() and %physicalActivityValue.exists() and %fruitsvegsValue.exists() and %BPmedsValue.exists() and %histHyperglicemiaValue.exists() and %familyHistDiabetesValue.exists()"
+        }
+      },
+      {
+        "url": "http://hl7.org/fhir/StructureDefinition/variable",
+        "valueExpression": {
+          "name": "finalScore",
+          "language": "text/fhirpath",
+          "expression": "iif(%allQuestionsAnswered, iif(%ageValue.exists(), %ageValue, 0) + iif(%bmiValue.exists(), %bmiValue, 0) + iif(%waistcircumferenceValue.exists(), %waistcircumferenceValue, 0) + iif(%physicalActivityValue.exists(), %physicalActivityValue, 0) + iif(%fruitsvegsValue.exists(), %fruitsvegsValue, 0) + iif(%BPmedsValue.exists(), %BPmedsValue, 0) + iif(%histHyperglicemiaValue.exists(), %histHyperglicemiaValue, 0) + iif(%familyHistDiabetesValue.exists(), %familyHistDiabetesValue, 0), {})"
+        }
+      }
+    ],
+    "url": "http://hl7belgium.org/mapping/Questionnaire/findrisc-questionnaire",
+    "version": "0.1.0",
+    "name": "FINDRISCQuestionnaire",
+    "title": "FINDRISC Test Questionnaire",
+    "status": "draft",
+    "subjectType": [
+      "Patient"
+    ],
+    "date": "2021-09-13T12:47:54+00:00",
+    "publisher": "RIZIV-INAMI",
+    "contact": [
+      {
+        "telecom": [
+          {
+            "system": "url",
+            "value": "http://somewhere.org"
+          }
+        ]
+      }
+    ],
+    "jurisdiction": [
+      {
+        "coding": [
+          {
+            "system": "http://unstats.un.org/unsd/methods/m49/m49.htm",
+            "code": "056"
+          },
+          {
+            "system": "urn:iso:std:iso:3166",
+            "code": "BE"
+          }
+        ]
+      }
+    ],
+    "item": [
+      {
+        "linkId": "title",
+        "text": "FINDRISC Test",
+        "type": "display",
+        "required": false
+      },
+      {
+        "linkId": "age",
+        "text": "Patient Age",
+        "type": "choice",
+        "required": true,
+        "answerOption": [
+          {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/ordinalValue",
+                "valueDecimal": 0
+              }
+            ],
+            "valueCoding": {
+              "code": "0-44",
+              "display": "0 to 44 years old"
+            }
+          },
+          {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/ordinalValue",
+                "valueDecimal": 2
+              }
+            ],
+            "valueCoding": {
+              "code": "45-54",
+              "display": "45 to 54 years old"
+            }
+          },
+          {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/ordinalValue",
+                "valueDecimal": 3
+              }
+            ],
+            "valueCoding": {
+              "code": "55-64",
+              "display": "55 to 64 years old"
+            }
+          },
+          {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/ordinalValue",
+                "valueDecimal": 4
+              }
+            ],
+            "valueCoding": {
+              "code": "65-",
+              "display": "Above 64 years old"
+            }
+          }
+        ]
+      },
+      {
+        "linkId": "bmi",
+        "text": "Patient BMI",
+        "type": "choice",
+        "required": true,
+        "answerOption": [
+          {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/ordinalValue",
+                "valueDecimal": 0
+              }
+            ],
+            "valueCoding": {
+              "code": "0-25",
+              "display": "0 to 25 km/m2"
+            }
+          },
+          {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/ordinalValue",
+                "valueDecimal": 1
+              }
+            ],
+            "valueCoding": {
+              "code": "25-30",
+              "display": "25 to 30 km/m2"
+            }
+          },
+          {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/ordinalValue",
+                "valueDecimal": 3
+              }
+            ],
+            "valueCoding": {
+              "code": "30-",
+              "display": "Above 30 km/m2"
+            }
+          }
+        ]
+      },
+      {
+        "linkId": "waistcircumference",
+        "text": "Waist circumference",
+        "type": "choice",
+        "required": true,
+        "answerOption": [
+          {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/ordinalValue",
+                "valueDecimal": 0
+              }
+            ],
+            "valueCoding": {
+              "code": "0-93",
+              "display": "Below 93 cm"
+            }
+          },
+          {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/ordinalValue",
+                "valueDecimal": 3
+              }
+            ],
+            "valueCoding": {
+              "code": "94-101",
+              "display": "Between 94 and 101"
+            }
+          },
+          {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/ordinalValue",
+                "valueDecimal": 4
+              }
+            ],
+            "valueCoding": {
+              "code": "102-",
+              "display": "Above 102"
+            }
+          }
+        ]
+      },
+      {
+        "linkId": "physicalActivity",
+        "text": "Physical Activity?",
+        "type": "choice",
+        "required": true,
+        "answerOption": [
+          {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/ordinalValue",
+                "valueDecimal": 0
+              }
+            ],
+            "valueCoding": {
+              "code": "yes",
+              "display": "Yes"
+            }
+          },
+          {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/ordinalValue",
+                "valueDecimal": 2
+              }
+            ],
+            "valueCoding": {
+              "code": "no",
+              "display": "No"
+            }
+          }
+        ]
+      },
+      {
+        "linkId": "fruitsvegs",
+        "text": "Daily consumption of fruits and vegetables?",
+        "type": "choice",
+        "required": true,
+        "answerOption": [
+          {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/ordinalValue",
+                "valueDecimal": 0
+              }
+            ],
+            "valueCoding": {
+              "code": "yes",
+              "display": "more than 5 times a day"
+            }
+          },
+          {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/ordinalValue",
+                "valueDecimal": 1
+              }
+            ],
+            "valueCoding": {
+              "code": "45-54",
+              "display": "less than 5 times a day"
+            }
+          }
+        ]
+      },
+      {
+        "linkId": "BPmeds",
+        "text": "History of high Blood pressure meds?",
+        "type": "choice",
+        "required": true,
+        "answerOption": [
+          {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/ordinalValue",
+                "valueDecimal": 0
+              }
+            ],
+            "valueCoding": {
+              "code": "no",
+              "display": "No"
+            }
+          },
+          {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/ordinalValue",
+                "valueDecimal": 2
+              }
+            ],
+            "valueCoding": {
+              "code": "yes",
+              "display": "Yes"
+            }
+          }
+        ]
+      },
+      {
+        "linkId": "histHyperglicemia",
+        "text": "History of high blood glucose?",
+        "type": "choice",
+        "required": true,
+        "answerOption": [
+          {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/ordinalValue",
+                "valueDecimal": 0
+              }
+            ],
+            "valueCoding": {
+              "code": "no",
+              "display": "No"
+            }
+          },
+          {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/ordinalValue",
+                "valueDecimal": 5
+              }
+            ],
+            "valueCoding": {
+              "code": "yes",
+              "display": "Yes"
+            }
+          }
+        ]
+      },
+      {
+        "linkId": "familyHistDiabetes",
+        "text": "Family history of diabetes?",
+        "type": "choice",
+        "required": true,
+        "answerOption": [
+          {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/ordinalValue",
+                "valueDecimal": 0
+              }
+            ],
+            "valueCoding": {
+              "code": "no",
+              "display": "No family history"
+            }
+          },
+          {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/ordinalValue",
+                "valueDecimal": 3
+              }
+            ],
+            "valueCoding": {
+              "code": "second-degree",
+              "display": "2nd degree family history"
+            }
+          },
+          {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/ordinalValue",
+                "valueDecimal": 5
+              }
+            ],
+            "valueCoding": {
+              "code": "first-degree",
+              "display": "1st degree family history"
+            }
+          }
+        ]
+      },
+      {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+            "valueExpression": {
+              "description": "Total score calculation",
+              "language": "text/fhirpath",
+              "expression": "iif(%allQuestionsAnswered, iif(%finalScore.exists(), %finalScore, 0), {})"
+            }
+          }
+        ],
+        "linkId": "findriscScore",
+        "text": "Patient FINDRISC total score",
+        "type": "decimal",
+        "required": false
+      },
+      {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+            "valueExpression": {
+              "language": "text/fhirpath",
+              "expression": "%finalScore.exists() and (%finalScore <7)"
+            }
+          }
+        ],
+        "linkId": "resultriskLow",
+        "text": "10-year diabetes risk: Low",
+        "type": "text",
+        "required": false,
+        "readOnly": true,
+        "initial": [
+          {
+            "valueString": "The probability of developing type 2 diabetes in 10 years is estimated to be 1 in 100"
+          }
+        ]
+      },
+      {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+            "valueExpression": {
+              "language": "text/fhirpath",
+              "expression": "%finalScore.exists() and (%finalScore > 6) and (%finalScore <12)"
+            }
+          }
+        ],
+        "linkId": "resultriskElevated",
+        "text": "10-year diabetes risk: Slightly Elevated",
+        "type": "text",
+        "required": false,
+        "readOnly": true,
+        "initial": [
+          {
+            "valueString": "The probability of developing type 2 diabetes in 10 years is estimated to be 1 in 25"
+          }
+        ]
+      },
+      {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+            "valueExpression": {
+              "language": "text/fhirpath",
+              "expression": "%finalScore.exists() and (%finalScore > 11) and (%finalScore <15)"
+            }
+          }
+        ],
+        "linkId": "resultriskModerate",
+        "text": "10-year diabetes risk: Moderate",
+        "type": "text",
+        "required": false,
+        "readOnly": true,
+        "initial": [
+          {
+            "valueString": "The probability of developing type 2 diabetes in 10 years is estimated to be 1 in 6"
+          }
+        ]
+      },
+      {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+            "valueExpression": {
+              "language": "text/fhirpath",
+              "expression": "%finalScore.exists() and (%finalScore > 14) and (%finalScore <21)"
+            }
+          }
+        ],
+        "linkId": "resultriskHight",
+        "text": "10-year diabetes risk: High",
+        "type": "text",
+        "required": false,
+        "readOnly": true,
+        "initial": [
+          {
+            "valueString": "The probability of developing type 2 diabetes in 10 years is estimated to be 1 in 3"
+          }
+        ]
+      },
+      {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+            "valueExpression": {
+              "language": "text/fhirpath",
+              "expression": "%finalScore.exists() and (%finalScore > 20)"
+            }
+          }
+        ],
+        "linkId": "resultriskVeryHigh",
+        "text": "10-year diabetes risk: Very High",
+        "type": "text",
+        "required": false,
+        "readOnly": true,
+        "initial": [
+          {
+            "valueString": "The probability of developing type 2 diabetes in 10 years is estimated to be 1 in 2"
+          }
+        ]
+      }
+    ]
+  }
