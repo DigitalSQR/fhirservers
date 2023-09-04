@@ -4,7 +4,7 @@ services:
   fhir-server:
     #image: alphora/cqf-ruler:latest
     #image: costateixeira/hapi:test
-    image: europe-west6-docker.pkg.dev/ahdis-ch/ahdis/matchbox:v3.3.3
+    image: europe-west6-docker.pkg.dev/ahdis-ch/ahdis/matchbox:v3.4.1
     restart: always
     container_name: ${server_name}
     ports:
@@ -13,7 +13,8 @@ services:
        - server.servlet.context-path=
        - hapi.fhir.allow_multiple_delete=true
        - hapi.fhir.server_address=localhost:${server_port}
-       - hapi.fhir.reuse_cached_search_results_millis=1000
+       - hapi.fhir.reuse_cached_search_results_millis=10000
+       - matchbox.fhir.context.onlyOneEngine=true
 
        - hapi.fhir.implementationguides.fhir_r4_core.name=hl7.fhir.r4.core
        - hapi.fhir.implementationguides.fhir_r4_core.version=4.0.1
