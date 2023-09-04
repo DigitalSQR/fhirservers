@@ -1,4 +1,4 @@
-@host = http://localhost:8080/fhir
+@host = http://localhost:8080/matchboxv3/fhir
 ### @host = https://test.ahdis.ch/matchbox/fhir
 @folder = measles
 
@@ -17,23 +17,35 @@ DELETE {{host}}/Questionnaire?_type=Questionnaire HTTP/1.1
 ###  DELETE ALL StructureMaps
 DELETE {{host}}/StructureMap?_type=StructureMap HTTP/1.1
 
-
-
 ###  DELETE MAPPING IF EXISTS
-DELETE {{host}}/StructureMap?url=http://ritikarawlani.github.io/smart-outbreak-measles/StructureMap/MeaslesQuestionnaireToLogicalModel HTTP/1.1
+DELETE {{host}}/StructureMap?url=http://worldhealthorganization.github.io/smart-otStructureMap/MeaslesQuestionnaireToLogicalModel HTTP/1.1
 
 
 ## MANDATORY SETUP
-### POST STRUCTUREMAP as FML
+### POST STRUCTUREMAP
 POST {{host}}/StructureMap HTTP/1.1
 Accept: application/fhir+json;fhirVersion=4.0
 Content-Type: text/fhir-mapping
 
-< ./{{folder}}/map.fml
+< ./{{folder}}/MeaslesQuestionnaireToLogicalModel.map
 
+### POST STRUCTUREMAP
+POST {{host}}/StructureMap HTTP/1.1
+Accept: application/fhir+json;fhirVersion=4.0
+Content-Type: text/fhir-mapping
+
+< ./{{folder}}/MeaslesLogicalModelToResources.map
+
+
+### POST STRUCTUREMAP
+POST {{host}}/StructureMap HTTP/1.1
+Accept: application/fhir+json;fhirVersion=4.0
+Content-Type: text/fhir-mapping
+
+< ./{{folder}}/MeaslesQuestionnaireToResources.map
 
 ### see if SM is there
-GET {{host}}/StructureMap?url=http://ritikarawlani.github.io/smart-outbreak-measles/StructureMap/MeaslesQuestionnaireToLogicalModel HTTP/1.1
+GET {{host}}/StructureMap?url=http://worldhealthorganization.github.io/smart-otStructureMap/MeaslesQuestionnaireToLogicalModel HTTP/1.1
 
 
 
@@ -60,7 +72,26 @@ Content-Type: application/fhir+json;fhirVersion=4.0
 < ./{{folder}}/StructureDefinition-SOTMeasles.json
 
 
+###
+PUT {{host}}/StructureDefinition/SOTMeaslesClassification
+Accept: application/fhir+json;fhirVersion=4.0
+Content-Type: application/fhir+json;fhirVersion=4.0
 
+< ./{{folder}}/StructureDefinition-SOTMeaslesClassification.json
+
+###
+PUT {{host}}/StructureDefinition/SOTMeaslesClinical
+Accept: application/fhir+json;fhirVersion=4.0
+Content-Type: application/fhir+json;fhirVersion=4.0
+
+< ./{{folder}}/StructureDefinition-SOTMeaslesClinical.json
+
+###
+PUT {{host}}/StructureDefinition/SOTMeaslesContactTracing
+Accept: application/fhir+json;fhirVersion=4.0
+Content-Type: application/fhir+json;fhirVersion=4.0
+
+< ./{{folder}}/StructureDefinition-SOTMeaslesContactTracing.json
 
 ###
 PUT {{host}}/StructureDefinition/SOTMeaslesDemographic
@@ -69,7 +100,19 @@ Content-Type: application/fhir+json;fhirVersion=4.0
 
 < ./{{folder}}/StructureDefinition-SOTMeaslesDemographic.json
 
+###
+PUT {{host}}/StructureDefinition/SOTMeaslesEpiData
+Accept: application/fhir+json;fhirVersion=4.0
+Content-Type: application/fhir+json;fhirVersion=4.0
 
+< ./{{folder}}/StructureDefinition-SOTMeaslesEpiData.json
+
+###
+PUT {{host}}/StructureDefinition/SOTMeaslesLaboratoryResults
+Accept: application/fhir+json;fhirVersion=4.0
+Content-Type: application/fhir+json;fhirVersion=4.0
+
+< ./{{folder}}/StructureDefinition-SOTMeaslesLaboratoryResults.json
 
 ###
 PUT {{host}}/StructureDefinition/SOTMeaslesReportingSource
@@ -77,6 +120,69 @@ Accept: application/fhir+json;fhirVersion=4.0
 Content-Type: application/fhir+json;fhirVersion=4.0
 
 < ./{{folder}}/StructureDefinition-SOTMeaslesReportingSource.json
+
+###
+PUT {{host}}/StructureDefinition/SOTMeaslesVaccinationStatus
+Accept: application/fhir+json;fhirVersion=4.0
+Content-Type: application/fhir+json;fhirVersion=4.0
+
+< ./{{folder}}/StructureDefinition-SOTMeaslesVaccinationStatus.json
+
+###
+PUT {{host}}/StructureDefinition/MeaslesCIFComposition
+Accept: application/fhir+json;fhirVersion=4.0
+Content-Type: application/fhir+json;fhirVersion=4.0
+
+< ./{{folder}}/StructureDefinition-MeaslesCIFComposition.json
+
+###
+PUT {{host}}/StructureDefinition/MeaslesEncounter
+Accept: application/fhir+json;fhirVersion=4.0
+Content-Type: application/fhir+json;fhirVersion=4.0
+
+< ./{{folder}}/StructureDefinition-MeaslesEncounter.json
+
+###
+PUT {{host}}/StructureDefinition/MeaslesOrganization
+Accept: application/fhir+json;fhirVersion=4.0
+Content-Type: application/fhir+json;fhirVersion=4.0
+
+< ./{{folder}}/StructureDefinition-MeaslesOrganization.json
+
+###
+PUT {{host}}/StructureDefinition/Guardian
+Accept: application/fhir+json;fhirVersion=4.0
+Content-Type: application/fhir+json;fhirVersion=4.0
+
+< ./{{folder}}/StructureDefinition-Guardian.json
+
+###
+PUT {{host}}/StructureDefinition/Landmark
+Accept: application/fhir+json;fhirVersion=4.0
+Content-Type: application/fhir+json;fhirVersion=4.0
+
+< ./{{folder}}/StructureDefinition-Landmark.json
+
+###
+PUT {{host}}/StructureDefinition/Occupation
+Accept: application/fhir+json;fhirVersion=4.0
+Content-Type: application/fhir+json;fhirVersion=4.0
+
+< ./{{folder}}/StructureDefinition-Occupation.json
+
+###
+PUT {{host}}/StructureDefinition/ProviderType
+Accept: application/fhir+json;fhirVersion=4.0
+Content-Type: application/fhir+json;fhirVersion=4.0
+
+< ./{{folder}}/StructureDefinition-ProviderType.json
+
+###
+PUT {{host}}/StructureDefinition/WorkAddress
+Accept: application/fhir+json;fhirVersion=4.0
+Content-Type: application/fhir+json;fhirVersion=4.0
+
+< ./{{folder}}/StructureDefinition-WorkAddress.json
 
 ###
 POST {{host}}/QuestionnaireResponse/$extract
@@ -87,17 +193,27 @@ Content-Type: application/fhir+json;fhirVersion=4.0
 
 
 ### POST a response
-POST {{host}}/StructureMap/$transform?source=http://ritikarawlani.github.io/smart-outbreak-measles/StructureMap/MeaslesQuestionnaireToLogicalModel
+POST {{host}}/StructureMap/$transform?source=http://worldhealthorganization.github.io/smart-ot/StructureMap/MeaslesQuestionnaireToLogicalModel
 Accept: application/fhir+json;fhirVersion=4.0
 Content-Type: application/fhir+json;fhirVersion=4.0
 
 < ./{{folder}}/QuestionnaireResponse-response1.json
 
 
+### POST a response
+POST {{host}}/StructureMap/$transform?source=http://worldhealthorganization.github.io/smart-ot/StructureMap/MeaslesLogicalModelToResources
+Accept: application/fhir+json;fhirVersion=4.0
+Content-Type: application/fhir+json;fhirVersion=4.0
+
+< ./{{folder}}/LogicalModelInstance.json
 
 
+### POST a response
+POST {{host}}/StructureMap/$transform?source=http://worldhealthorganization.github.io/smart-ot/StructureMap/MeaslesQuestionnaireToResources
+Accept: application/fhir+json;fhirVersion=4.0
+Content-Type: application/fhir+json;fhirVersion=4.0
 
-
+< ./{{folder}}/QuestionnaireResponse-response1.json
 
 
 

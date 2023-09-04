@@ -1,0 +1,47 @@
+{
+    "resourceType": "SOTMeasles",
+    "Demographics": {
+      "Name": {
+        "family": "John Doe"
+      },
+      "DateOfBirth": "2014-08-07",
+      "PlaceOfResidence": {
+        "text": "Avenue"
+      },
+      "Landmark": "Next the spot",
+      "Guardian": {
+        "family": "Mother Doe"
+      },
+      "Telephone": {
+        "value": "234phone"
+      },
+      "Occupation": "Busy",
+      "WorkAddress": {
+        "text": "Workaddress"
+      }
+    },
+    "ReportingSource": {
+      "PlaceOfReporting": {
+        "city": "City",
+        "district": "Locality",
+        "state": "State",
+        "country": "Utopia"
+      },
+      "ReportedBy": "reporter",
+      "HealthServiceName": "hospital",
+      "HealthServiceTelephone": [
+        {
+          "value": "123-phone"
+        }
+      ],
+      "DateOfConsultation": "2023-08-11",
+      "DateOfHomeVisit": "2023-08-10",
+      "DateReportedLocal": "2023-08-09",
+      "DateReportedNational": "2023-08-08",
+      "InitialDiagnosis": {
+        "system": "http://worldhealthorganization.github.io/smart-ot/InitDiag",
+        "code": "1",
+        "display": "Measles"
+      }
+    }
+  }
