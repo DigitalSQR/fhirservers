@@ -1,4 +1,4 @@
-@host = http://localhost:8080/matchboxv3/fhir
+@host = http://localhost:8080/fhir
 ### @host = https://test.ahdis.ch/matchbox/fhir
 @folder = measles
 
@@ -61,6 +61,11 @@ Content-Type: application/fhir+json;fhirVersion=4.0
 ### See if Questionnaire is there 
 GET {{host}}/Questionnaire/Questionnaire-SOTMeasles
 
+
+### See if Questionnaire is there 
+GET {{host}}/Questionnaire HTTP/1.1
+Accept: application/fhir+json;fhirVersion=4.0
+Content-Type: application/fhir+json;fhirVersion=4.0
 
 
 
