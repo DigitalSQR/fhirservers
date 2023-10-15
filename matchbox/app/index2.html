@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resource Handler</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        .status-searching {
+            color: red;
+        }
+        .status-found {
+            color: darkgreen;
+        }
+    </style>
+</head> 
+<body>
+    <div class="container mt-4">
+        <h2>FHIR Resource Handler</h2>
+        <p id="server-status" class="status-searching">Searching for server...</p>
+        
+        <select id="questionnaireResponseDropdown" class="form-select">
+            <!-- Options will be dynamically added -->
+        </select>
+        <button id="processBtn" class="btn btn-primary mt-2">Process Selected Response</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/0.5.0/js/sql.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            var commit = true;
+            var serverUrl; // Declare serverUrl here
+            var resourcesBaseUrl; // Declare serverUrl here
+
+            fetch('/config.json')
+                .then(response => response.json())
+                .then(config => {
+                    serverUrl = config.server_url;  // Initialize serverUrl here
+                    resourcesBaseUrl = config.ig_url;
+
+                    var fetchServer = function () {
+                        fetch(serverUrl + '/metadata')
+                            .then(response => {
+                                if (response.ok) {
+                                    clearInterval(serverInterval);
+                                    $("#server-status")
+                                        .removeClass('status-searching')
+                                        .addClass('status-found')
+                                        .text("Server found at: " + serverUrl);
+                                    fetchAndProcessSQLData();
+                                }
+                            })
+                            .catch(error => console.error("Error:", error));
+                    };
+                    fetchServer();
+                    var serverInterval = setInterval(fetchServer, 5000);
+
+                    var fetchAndProcessSQLData = function () {
+                        fetch(resourcesBaseUrl + 'package.db')
+                            .then(response => response.arrayBuffer())
+                            .then(dbBuffer => {
+                                var db = new SQL.Database(new Uint8Array(dbBuffer));
+                                var results = db.exec("SELECT Type, Id FROM Resources WHERE Url IS NOT NULL AND Url != '';");
+
+                                if (results[0]) {
+                                    results[0].values.forEach(resource => {
+                                        var resourceType = resource[0];
+                                        var resourceId = resource[1];
+                                        fetchAndProcessResourceData(resourceType, resourceId);
+                                    });
+                                } else {
+                                    console.error('No results found');
+                                }
+
+                                var questionnaireResults = db.exec("SELECT Id FROM Resources WHERE Type='QuestionnaireResponse';");
+
+                                if (questionnaireResults[0]) {
+                                    questionnaireResults[0].values.forEach(response => {
+                                        var responseId = response[0];
+                                        $('#questionnaireResponseDropdown').append(new Option(responseId, responseId));
+                                    });
+                                } else {
+                                    console.error('No QuestionnaireResponse found');
+                                }
+                                db.close();
+                            })
+                            .catch(error => console.error('Error loading the database:', error));
+                    };
+
+                    var fetchAndProcessResourceData = function (resourceType, resourceId) {
+                        fetch(`${resourcesBaseUrl}${resourceType}-${resourceId}.json`)
+                            .then(response => response.json())
+                            .then(resourceData => {
+                                if (resourceType === "Bundle" && resourceData.type === "transaction") {
+                                    console.log("Would POST to: " + serverUrl);
+                                    console.log("Data: ", resourceData);
+
+                                    if(commit) {
+                                        fetch(serverUrl, {
+                                            method: 'POST',
+                                            headers: { 'Content-Type': 'application/json' },
+                                            body: JSON.stringify(resourceData)
+                                        }).then(response => {
+                                            console.log("POST Response: ", response);
+                                        }).catch(error => {
+                                            console.error("POST Error: ", error);
+                                        });
+                                    }
+                                } else {
+                                    const putUrl = `${serverUrl}/${resourceType}/${resourceId}`;
+                                    console.log("Would PUT to: " + putUrl);
+                                    console.log("Data: ", resourceData);
+
+                                    if(commit) {
+                                        fetch(putUrl, {
+                                            method: 'PUT',
+                                            headers: { 'Content-Type': 'application/json' },
+                                            body: JSON.stringify(resourceData)
+                                        }).then(response => {
+                                            console.log("PUT Response: ", response);
+                                        }).catch(error => {
+                                            console.error("PUT Error: ", error);
+                                        });
+                                    }
+                                }
+                            })
+                            .catch(error => console.error(`Error loading the resource (${resourceType}-${resourceId}):`, error));
+                    };
+                })
+                .catch(error => {
+                    console.error('Error fetching config:', error);
+                });
+
+            $("#processBtn").click(function () {
+            var selectedResponse = $("#questionnaireResponseDropdown").val();
+            console.log("Selected Response ID: ", selectedResponse);
+            
+            var resourceType = "QuestionnaireResponse";
+            
+            // serverUrl should now be available here
+            fetch(`${resourcesBaseUrl}${resourceType}-${selectedResponse}.json`)
+                .then(response => response.json())
+                .then(resourceJson => {
+                    fetch(`${serverUrl}/QuestionnaireResponse/$extract`, {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/fhir+json;fhirVersion=4.0',
+                            'Content-Type': 'application/fhir+json;fhirVersion=4.0'
+                        },
+                        body: JSON.stringify(resourceJson)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log("POST Response: ", data);
+                        $("#responseBox").val(JSON.stringify(data, null, 2));
+                    })
+                    .catch(error => {
+                        console.error("POST Error: ", error);
+                        $("#responseBox").val("Error: " + error);
+                    });
+                })
+                .catch(error => {
+                    console.error(`Error fetching the resource (${resourceType}-${selectedResponse}):`, error);
+                });
+        });
+    });
+    </script>
+</body>
+</html>
