@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resource Handler</title>
+    <title>QuestionnaireResponse Extraction Test</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
     <style>
         .status-searching {
@@ -16,13 +16,14 @@
 </head> 
 <body>
     <div class="container mt-4">
-        <h2>FHIR Resource Handler</h2>
+        <h2>QuestionnaireResponse Extraction</h2>
         <p id="server-status" class="status-searching">Searching for server...</p>
         
         <select id="questionnaireResponseDropdown" class="form-select">
             <!-- Options will be dynamically added -->
         </select>
         <button id="processBtn" class="btn btn-primary mt-2">Process Selected Response</button>
+        <textarea id="responseBox" class="form-control mt-2" style="font-family: monospace;" rows="10" readonly></textarea>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
