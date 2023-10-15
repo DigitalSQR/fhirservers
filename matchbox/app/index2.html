@@ -28,7 +28,7 @@
       display: flex;
       flex-direction: column;
       flex-grow: 1;
-      padding: 0 10px;
+      padding: 0 5px;
     }
 
     #left-block {
@@ -38,14 +38,14 @@
     }
 
     #left-block.collapsed {
-      max-width: 3ch;
+      max-width: 5ch;
       /* Reduced width instead of display:none; */
       margin-right: 10px;
       /* Add some margin when collapsed */
     }
 
     #left-block.collapsed #left-code {
-      max-width: 3ch;
+      /* max-width: 5ch; */
       /* Almost hide the code box when collapsed */
     }
 
@@ -54,13 +54,23 @@
       width: 100%;
     }
 
+    #left-code {
+      width: 100%;
+      margin-left: 0;
+      /* Remove or reduce left margin */
+      margin-right: 0;
+    }
+
+
     .code-box {
       width: 100%;
       height: 100%;
       white-space: pre-wrap;
       overflow-x: auto;
       border: 1px solid #ccc;
-      padding: 10px;
+      margin-right: 0px;
+      margin-right: 0px;
+      /* padding: 5px; */
     }
 
     .code-container {
@@ -73,7 +83,7 @@
 
     #collapse-button {
       width: 100%;
-      min-width: 3ch;
+      min-width: 5ch;
       margin-left: 0;
       /* Remove or reduce left margin */
       margin-right: 0;
@@ -231,6 +241,9 @@
             fetch(`${resourcesBaseUrl}QuestionnaireResponse-${selectedResponse}.json`)
               .then(response => response.json())
               .then(data => {
+                if (data.text) {
+                  delete data.text;
+                };
                 $("#left-code").text(JSON.stringify(data, null, 2));
               })
               .catch(error => {
@@ -243,7 +256,7 @@
             if ($("#left-block").hasClass("collapsed")) {
               $("#collapse-button").text(">>");
             } else {
-              $("#collapse-button").text("<<");
+              $("#collapse-button").text("<<                 Collapse ");
             }
           });
 
