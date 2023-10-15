@@ -6,39 +6,36 @@
     <title>QuestionnaireResponse Extraction Test</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
     <style>
-        .status-searching {
-            color: red;
-        }
-        .status-found {
-            color: darkgreen;
-        }
+        .status-searching { color: red; }
+        .status-found { color: darkgreen; }
+        textarea { font-family: 'Courier New', monospace; }
     </style>
-</head> 
+</head>
 <body>
     <div class="container mt-4">
-        <h2>QuestionnaireResponse Extraction</h2>
+        <h2>QuestionnaireResponse Extraction Test</h2>
         <p id="server-status" class="status-searching">Searching for server...</p>
-        
-        <select id="questionnaireResponseDropdown" class="form-select">
+
+        <button id="uploadBtn" class="btn btn-secondary mb-2">Upload all resources to server</button>
+        <select id="questionnaireResponseDropdown" class="form-select mb-2">
             <!-- Options will be dynamically added -->
         </select>
-        <button id="processBtn" class="btn btn-primary mt-2">Process Selected Response</button>
-        <textarea id="responseBox" class="form-control mt-2" style="font-family: monospace;" rows="10" readonly></textarea>
+        <button id="processBtn" class="btn btn-primary mb-2">Process Selected Response</button>
+        <textarea id="responseBox" class="form-control mt-2" rows="5" readonly></textarea>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/0.5.0/js/sql.js"></script>
-
     <script>
         $(document).ready(function () {
-            var commit = true;
-            var serverUrl; // Declare serverUrl here
-            var resourcesBaseUrl; // Declare serverUrl here
+            let serverUrl;
+            let resourcesBaseUrl;
+            let commit = false;
 
             fetch('/config.json')
                 .then(response => response.json())
                 .then(config => {
-                    serverUrl = config.server_url;  // Initialize serverUrl here
+                    serverUrl = config.server_url;
                     resourcesBaseUrl = config.ig_url;
 
                     var fetchServer = function () {
@@ -50,7 +47,7 @@
                                         .removeClass('status-searching')
                                         .addClass('status-found')
                                         .text("Server found at: " + serverUrl);
-                                    fetchAndProcessSQLData();
+ //                                   fetchAndProcessSQLData();
                                 }
                             })
                             .catch(error => console.error("Error:", error));
@@ -76,7 +73,7 @@
                                 }
 
                                 var questionnaireResults = db.exec("SELECT Id FROM Resources WHERE Type='QuestionnaireResponse';");
-
+                                $('#questionnaireResponseDropdown').empty();
                                 if (questionnaireResults[0]) {
                                     questionnaireResults[0].values.forEach(response => {
                                         var responseId = response[0];
@@ -129,44 +126,45 @@
                             })
                             .catch(error => console.error(`Error loading the resource (${resourceType}-${resourceId}):`, error));
                     };
+                    $("#uploadBtn").click(function () {
+                        commit = true;
+                        fetchAndProcessSQLData();
+                    });
+
+                    
+                    $("#processBtn").click(function () {
+                        var selectedResponse = $("#questionnaireResponseDropdown").val();
+                        fetch(`${resourcesBaseUrl}QuestionnaireResponse-${selectedResponse}.json`)
+                            .then(response => response.json())
+                            .then(resourceJson => {
+                                fetch(`${serverUrl}/QuestionnaireResponse/$extract`, {
+                                    method: 'POST',
+                                    headers: {
+                                        'Accept': 'application/fhir+json;fhirVersion=4.0',
+                                        'Content-Type': 'application/fhir+json;fhirVersion=4.0'
+                                    },
+                                    body: JSON.stringify(resourceJson)
+                                })
+                                .then(response => response.json())
+                                .then(data => {
+                                    console.log("POST Response: ", data);
+                                    $("#responseBox").val(JSON.stringify(data, null, 2));
+                                })
+                                .catch(error => {
+                                    console.error("POST Error: ", error);
+                                    $("#responseBox").val("Error: " + error);
+                                });
+                            })
+                            .catch(error => {
+                                console.error(`Error fetching the resource (QuestionnaireResponse-${selectedResponse}):`, error);
+                            });
+                    });
                 })
                 .catch(error => {
                     console.error('Error fetching config:', error);
                 });
-
-            $("#processBtn").click(function () {
-            var selectedResponse = $("#questionnaireResponseDropdown").val();
-            console.log("Selected Response ID: ", selectedResponse);
-            
-            var resourceType = "QuestionnaireResponse";
-            
-            // serverUrl should now be available here
-            fetch(`${resourcesBaseUrl}${resourceType}-${selectedResponse}.json`)
-                .then(response => response.json())
-                .then(resourceJson => {
-                    fetch(`${serverUrl}/QuestionnaireResponse/$extract`, {
-                        method: 'POST',
-                        headers: {
-                            'Accept': 'application/fhir+json;fhirVersion=4.0',
-                            'Content-Type': 'application/fhir+json;fhirVersion=4.0'
-                        },
-                        body: JSON.stringify(resourceJson)
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log("POST Response: ", data);
-                        $("#responseBox").val(JSON.stringify(data, null, 2));
-                    })
-                    .catch(error => {
-                        console.error("POST Error: ", error);
-                        $("#responseBox").val("Error: " + error);
-                    });
-                })
-                .catch(error => {
-                    console.error(`Error fetching the resource (${resourceType}-${selectedResponse}):`, error);
-                });
         });
-    });
     </script>
 </body>
 </html>
+ 
